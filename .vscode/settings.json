@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "board_api.h": "c",
+        "compile_date.h": "c"
+    }
+}

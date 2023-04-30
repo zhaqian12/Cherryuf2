@@ -1,0 +1,9 @@
+[submodule "lib/CherryUSB"]
+	path = lib/CherryUSB
+	url = https://github.com/zhaqian12/CherryUSB
+[submodule "lib/uf2"]
+	path = lib/uf2
+	url = https://github.com/microsoft/uf2.git
+[submodule "sdk/ArteryTek/at32f413_library"]
+	path = sdk/ArteryTek/at32f413_library
+	url = https://github.com/ArteryTek/AT32F413_Firmware_Library.git
