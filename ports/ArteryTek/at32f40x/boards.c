@@ -51,7 +51,7 @@ void board_init(void)
   // crm_periph_clock_enable(CRM_GPIOB_PERIPH_CLOCK, TRUE);
   // crm_periph_clock_enable(CRM_GPIOC_PERIPH_CLOCK, TRUE);
   crm_periph_clock_enable(CRM_GPIOD_PERIPH_CLOCK, TRUE);
-  // crm_periph_clock_enable(CRM_GPIOF_PERIPH_CLOCK, TRUE);
+  // crm_periph_clock_enable(CRM_GPIOE_PERIPH_CLOCK, TRUE);
   // crm_periph_clock_enable(CRM_IOMUX_PERIPH_CLOCK, TRUE);
 
 #ifdef LED_PIN
@@ -97,7 +97,7 @@ void board_app_jump(void)
 //  crm_periph_clock_enable(CRM_GPIOB_PERIPH_CLOCK, FALSE);
 //  crm_periph_clock_enable(CRM_GPIOC_PERIPH_CLOCK, FALSE);
  crm_periph_clock_enable(CRM_GPIOD_PERIPH_CLOCK, FALSE);
-//  crm_periph_clock_enable(CRM_GPIOF_PERIPH_CLOCK, FALSE);
+//  crm_periph_clock_enable(CRM_GPIOE_PERIPH_CLOCK, FALSE);
 //  crm_periph_clock_enable(CRM_IOMUX_PERIPH_CLOCK, FALSE);
  crm_periph_clock_enable(CRM_USB_PERIPH_CLOCK, FALSE);
  crm_reset();

@@ -36,7 +36,6 @@ PORT_DIR = ports/$(PORTS)/$(PORT)
 BOARD_DIR = $(PORT_DIR)/boards/$(BOARD)
 
 ifeq ($(wildcard $(TOP)/$(BOARD_DIR)/),)
-  $(info You must provide a BOARD parameter with 'BOARD=$(TOP)/$(BOARD_DIR)')
   $(info You must provide a BOARD parameter with 'BOARD=')
   $(error Invalid BOARD specified)
 endif

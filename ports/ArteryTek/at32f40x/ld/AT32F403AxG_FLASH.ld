@@ -1,10 +1,10 @@
 /*
 *****************************************************************************
 **
-**  File        : AT32F413xB_FLASH.ld
+**  File        : AT32F403AxG_FLASH.ld
 **
-**  Abstract    : Linker script for AT32F413xB Device with
-**                128KByte FLASH, 32KByte RAM
+**  Abstract    : Linker script for AT32F403AxG Device with
+**                1000KByte FLASH, 96KByte RAM
 **
 **                Set heap size, stack size and stack location according
 **                to application requirements.
@@ -23,7 +23,7 @@ ENTRY(Reset_Handler)
 
 /* Highest address of the user mode stack */
 _estack = ORIGIN(RAM) + LENGTH(RAM);    /* end of RAM */
-_board_dfu_dbl_tap = 0x20007C00;
+_board_dfu_dbl_tap = 0x20017C00;
 /* Generate a link error if heap and stack don't fit into RAM */
 _Min_Heap_Size = 0x200;      /* required amount of heap  */
 _Min_Stack_Size = 0x400; /* required amount of stack */
@@ -31,8 +31,8 @@ _Min_Stack_Size = 0x400; /* required amount of stack */
 /* Specify the memory areas */
 MEMORY
 {
-FLASH (rx)      : ORIGIN = 0x08000000, LENGTH = 128K
-RAM (xrw)       : ORIGIN = 0x20000000, LENGTH = 32K
+FLASH (rx)      : ORIGIN = 0x08000000, LENGTH = 1000K
+RAM (xrw)       : ORIGIN = 0x20000000, LENGTH = 96K
 SPIM (rx)       : ORIGIN = 0x08400000, LENGTH = 16384K
 }
 

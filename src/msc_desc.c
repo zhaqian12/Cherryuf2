@@ -166,9 +166,12 @@ int usbd_msc_sector_write(uint32_t sector, uint8_t *buffer, uint32_t length)
             first_write = false;
         }
         if (_wr_state.numWritten >= _wr_state.numBlocks) 
-        {
-            board_timer_start(1);
-            flashing_flag = true;
+        {   
+            if (!flashing_flag)
+            {
+                board_timer_start(1);
+                flashing_flag = true;
+            }
         }
     }
     return 0;
