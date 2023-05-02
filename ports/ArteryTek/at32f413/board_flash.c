@@ -75,7 +75,6 @@ static bool flash_erase(uint32_t addr)
   if ( !erased && !is_blank(sector_addr, size) )
   {
     flash_sector_erase(sector_addr);
-    flash_operation_wait_for(ERASE_TIMEOUT);
   }
 
   return true;
@@ -88,9 +87,7 @@ static void flash_write(uint32_t dst, const uint8_t *src, int len)
   for (int i = 0; i < len; i += 4)
   {
     uint32_t data = *( (uint32_t*) ((void*) (src + i)) );
-
     flash_word_program(dst + i, data);
-    flash_operation_wait_for(ERASE_TIMEOUT);
   }
 
   // verify contents

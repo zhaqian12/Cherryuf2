@@ -58,6 +58,7 @@ CFLAGS += \
   -DUF2_VERSION_BASE='"$(GIT_VERSION)"'\
   -DUF2_VERSION='"$(GIT_VERSION) - $(GIT_SUBMODULE_VERSIONS)"'
 
+DEPFLAGS ?=
 #-------------- Bootloader --------------
 
 SRC_C += \

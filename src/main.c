@@ -71,6 +71,9 @@ int main(void)
 
   while (1)
   {
+    if (!usb_device_is_configured()) {
+      if ( board_usb_process ) board_usb_process();
+    }
     msc_task_process();
   }
 }

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2018 Ha Thach for Adafruit Industries
+ * Copyright (c) 2023 Zhaqian
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,89 +22,72 @@
  * THE SOFTWARE.
  */
 
-#ifndef BOARDS_H
-#define BOARDS_H
+#ifndef BOARD_H_
+#define BOARD_H_
 
-#include <stdbool.h>
-#include <stdint.h>
-#include <string.h>
-#include "boards.h"
+#include "at32f415.h"
 
 //--------------------------------------------------------------------+
-// Features
+// LED
 //--------------------------------------------------------------------+
-
-// Flash Start Address of Application
-#ifndef BOARD_FLASH_APP_START
-#define BOARD_FLASH_APP_START  0
-#endif
-
-// Use Double Tap method to enter DFU mode
-#ifndef CHERRYUF2_DFU_DOUBLE_TAP
-#define CHERRYUF2_DFU_DOUBLE_TAP      1
-#endif
-
-// Write protection for bootloader
-#ifndef CHERRYUF2_PROTECT_BOOTLOADER
-#define CHERRYUF2_PROTECT_BOOTLOADER  0
-#endif
-
-#ifndef CHERRYUF2_MSC_WRITE_COMPLETE_TIMEOUT
-#define CHERRYUF2_MSC_WRITE_COMPLETE_TIMEOUT  100
-#endif
+#define LED_PORT              GPIOA
+#define LED_PIN               GPIO_PINS_1
+#define LED_STATE_ON          0
 
 //--------------------------------------------------------------------+
-// Constant
+// FLASH 
 //--------------------------------------------------------------------+
-
-#define DBL_TAP_MAGIC            0xf01669ef // Enter DFU magic
-#define DBL_TAP_MAGIC_QUICK_BOOT 0xf02669ef // Skip double tap delay detection
-#define DBL_TAP_MAGIC_ERASE_APP  0xf5e80ab4 // Erase entire application !!
+#define BOARD_SECTOR_SIZE     1024U
+#define BOARD_SECTOR_COUNT    128
+#define BOARD_FLASH_SIZE      (BOARD_SECTOR_SIZE * BOARD_SECTOR_COUNT)
 
 //--------------------------------------------------------------------+
-// Basic API
+// USB UF2 
 //--------------------------------------------------------------------+
+#define USBD_VID              0x00AA
+#define USBD_PID              0xAAFF
+#define USB_MANUFACTURER      "Zhaqian"
+#define USB_PRODUCT           "AT32F415"
 
-// Baudrate for UART if used
-#define BOARD_UART_BAUDRATE   115200
+#define UF2_PRODUCT_NAME      USB_MANUFACTURER " " USB_PRODUCT
+#define UF2_BOARD_ID          "AT32F415xB"
+#define UF2_VOLUME_LABEL      "Zhaqian"
+#define UF2_INDEX_URL         "https://www.arterytek.com/cn/index.jsp"
 
-void board_init(void);
-
-void board_led_write(uint32_t value);
-
-int board_uart_write(void const * buf, int len);
-
-void board_timer_start(uint32_t ms);
-
-void board_timer_stop(void);
-
-extern void board_timer_handler(void);
-
-bool board_app_valid(void);
-
-void board_app_jump(void);
-
-void board_dfu_complete(void);
-
-void board_usb_process(void);
 //--------------------------------------------------------------------+
-// Flash API
+// CLOCK
 //--------------------------------------------------------------------+
+static inline void clock_init(void)
+{
+  crm_reset();
 
-void board_flash_init(void);
+  flash_psr_set(FLASH_WAIT_CYCLE_4);
 
-uint32_t board_flash_size(void);
+  crm_clock_source_enable(CRM_CLOCK_SOURCE_HEXT, TRUE);
+  while(crm_hext_stable_wait() == ERROR)
+  {
+  }
 
-void board_flash_read (uint32_t addr, void* buffer, uint32_t len);
+  crm_pll_config(CRM_PLL_SOURCE_HEXT, CRM_PLL_MULT_18);
 
-void board_flash_write(uint32_t addr, void const *data, uint32_t len);
+  crm_clock_source_enable(CRM_CLOCK_SOURCE_PLL, TRUE);
+  while(crm_flag_get(CRM_PLL_STABLE_FLAG) != SET)
+  {
+  }
 
-void board_flash_flush(void);
+  crm_ahb_div_set(CRM_AHB_DIV_1);
+  crm_apb2_div_set(CRM_APB2_DIV_2);
+  crm_apb1_div_set(CRM_APB1_DIV_2);
+  crm_usb_clock_div_set(CRM_USB_DIV_3);
 
-void board_flash_erase_app(void);
+  crm_auto_step_mode_enable(TRUE);
 
-bool board_flash_protect_bootloader(bool protect);
+  crm_sysclk_switch(CRM_SCLK_PLL);
+  while(crm_sysclk_switch_status_get() != CRM_SCLK_PLL)
+  {
+  }
 
-void board_self_update(const uint8_t * bootloader_bin, uint32_t bootloader_len);
-
+  crm_auto_step_mode_enable(FALSE);
+  crm_periph_clock_enable(CRM_PWC_PERIPH_CLOCK, TRUE);
+}
 #endif

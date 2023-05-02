@@ -29,11 +29,14 @@ SRC_C += \
 	$(AT_DRIVERS)/src/at32f413_gpio.c\
 	$(AT_DRIVERS)/src/at32f413_misc.c
 
-# Port source for USB
-SRC_C += lib/CherryUSB/port/fsdev/usb_dc_fsdev.c
-
 # Port include
 INC += \
 	$(TOP)/$(AT_CMSIS)/cm4/core_support \
 	$(TOP)/$(AT_CMSIS)/cm4/device_support \
 	$(TOP)/$(AT_DRIVERS)/inc
+
+# Port source for USB
+SRC_C += $(CHERRYUSB_DIR)/port/fsdev/usb_dc_fsdev.c
+
+# Port include for USB port
+INC += $(TOP)/$(CHERRYUSB_DIR)/port/fsdev

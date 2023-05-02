@@ -1,10 +1,10 @@
 /*
 *****************************************************************************
 **
-**  File        : AT32F403AxG_FLASH.ld
+**  File        : AT32F415xB_FLASH.ld
 **
-**  Abstract    : Linker script for AT32F403AxG Device with
-**                1000KByte FLASH, 96KByte RAM
+**  Abstract    : Linker script for AT32F415xB Device with
+**                128KByte FLASH, 32KByte RAM
 **
 **                Set heap size, stack size and stack location according
 **                to application requirements.
@@ -27,14 +27,13 @@ _board_dfu_dbl_tap = _estack;
 
 /* Generate a link error if heap and stack don't fit into RAM */
 _Min_Heap_Size = 0x200;      /* required amount of heap  */
-_Min_Stack_Size = 0x400; /* required amount of stack */
+_Min_Stack_Size = 0x400;     /* required amount of stack */
 
 /* Specify the memory areas */
 MEMORY
 {
-FLASH (rx)      : ORIGIN = 0x08000000, LENGTH = 1000K
-RAM (xrw)       : ORIGIN = 0x20000000, LENGTH = 96K - 4
-SPIM (rx)       : ORIGIN = 0x08400000, LENGTH = 16384K
+FLASH (rx)      : ORIGIN = 0x08000000, LENGTH = 128K
+RAM (xrw)       : ORIGIN = 0x20000000, LENGTH = 32K - 4
 }
 
 /* Define output sections */
@@ -116,19 +115,6 @@ SECTIONS
     . = ALIGN(4);
     _edata = .;        /* define a global symbol at data end */
   } >RAM AT> FLASH
-
-  _spim_init_base = LOADADDR(.spim);
-  _spim_init_length = SIZEOF(.spim);
-  
-  .spim :
-  {
-    . = ALIGN(4);
-    _spim_start = .;        /* create a global symbol at spim start */
-    *(.spim)                /* .spim sections */
-    *(.spim*)               /* .spim* sections */
-    . = ALIGN(4);
-    _spim_end = .;         /* define a global symbols at end of spim */
-  } >SPIM
 
   /* Uninitialized data section */
   . = ALIGN(4);

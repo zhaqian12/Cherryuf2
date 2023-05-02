@@ -149,26 +149,21 @@ int usbd_msc_sector_read(uint32_t sector, uint8_t *buffer, uint32_t length)
 int usbd_msc_sector_write(uint32_t sector, uint8_t *buffer, uint32_t length) 
 {
     (void)length;
-    static bool first_write = true;
-
+    extern volatile bool flashing_flag;
+    extern volatile uint32_t _timer_count;
+    
     if (sector < BLOCK_COUNT) 
     {
         uf2_write_block(0, buffer, &_wr_state);
     }
     // All block of uf2 file is complete --> complete DFU process
-    if (_wr_state.numBlocks) 
-    {
-        extern volatile bool flashing_flag;
-        extern volatile uint32_t _timer_count; 
-        if (first_write) 
-        {
-            _timer_count = 0;
-            first_write = false;
-        }
+    if (_wr_state.numBlocks > 0) 
+    { 
         if (_wr_state.numWritten >= _wr_state.numBlocks) 
         {   
             if (!flashing_flag)
-            {
+            {            
+                _timer_count = 0;
                 board_timer_start(1);
                 flashing_flag = true;
             }

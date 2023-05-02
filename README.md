@@ -5,6 +5,7 @@ It only supports DFU with MSC.
 .
 ├── lib                   # Sources from 3rd party such as cherryusb, uf2 ...
 ├── sdk                   # Sources from 3rd party such as mcu drivers
+├── bootloader            # Bin for bootloader of this repo
 ├── ports                 # Port/family specific sources
 │   ├── ArtertTek         # MCU manufacturer
 │       └── at32f413      # MCU Series
@@ -16,10 +17,19 @@ It only supports DFU with MSC.
 # Support Devices
 | Manufacturer | MCU         |
 | :----------  | :---------- | 
+| ArteryTek    | AT32F403A   |
+| ArteryTek    | AT32F407    |
 | ArteryTek    | AT32F413    |
+| ArteryTek    | AT32F415    |
 
 # How to build
 ```
 $ cd ports/ArtertTek/at32f413
 $ make BOARD=at32f413cbt7
+```
+
+# How to clean
+```
+$ cd ports/ArtertTek/at32f413
+$ make BOARD=at32f413cbt7 clean
 ```

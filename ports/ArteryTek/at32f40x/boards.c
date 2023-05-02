@@ -74,6 +74,11 @@ void board_dfu_complete(void)
   NVIC_SystemReset();
 }
 
+void board_usb_process(void) 
+{
+  // todo
+}
+
 bool board_app_valid(void)
 {
   volatile uint32_t const *app_vector = (volatile uint32_t const *)BOARD_FLASH_APP_START;
@@ -90,29 +95,29 @@ bool board_app_valid(void)
 void board_app_jump(void)
 {
 #ifdef LED_PIN
- gpio_reset(LED_PORT);
+  gpio_reset(LED_PORT);
 #endif
 
- crm_periph_clock_enable(CRM_GPIOA_PERIPH_CLOCK, FALSE);
-//  crm_periph_clock_enable(CRM_GPIOB_PERIPH_CLOCK, FALSE);
-//  crm_periph_clock_enable(CRM_GPIOC_PERIPH_CLOCK, FALSE);
- crm_periph_clock_enable(CRM_GPIOD_PERIPH_CLOCK, FALSE);
-//  crm_periph_clock_enable(CRM_GPIOE_PERIPH_CLOCK, FALSE);
-//  crm_periph_clock_enable(CRM_IOMUX_PERIPH_CLOCK, FALSE);
- crm_periph_clock_enable(CRM_USB_PERIPH_CLOCK, FALSE);
- crm_reset();
+  crm_periph_clock_enable(CRM_GPIOA_PERIPH_CLOCK, FALSE);
+  //  crm_periph_clock_enable(CRM_GPIOB_PERIPH_CLOCK, FALSE);
+  //  crm_periph_clock_enable(CRM_GPIOC_PERIPH_CLOCK, FALSE);
+  crm_periph_clock_enable(CRM_GPIOD_PERIPH_CLOCK, FALSE);
+  //  crm_periph_clock_enable(CRM_GPIOE_PERIPH_CLOCK, FALSE);
+  //  crm_periph_clock_enable(CRM_IOMUX_PERIPH_CLOCK, FALSE);
+  crm_periph_clock_enable(CRM_USB_PERIPH_CLOCK, FALSE);
+  crm_reset();
 
- SysTick->CTRL = 0;
- SysTick->LOAD = 0;
- SysTick->VAL = 0;
+  SysTick->CTRL = 0;
+  SysTick->LOAD = 0;
+  SysTick->VAL = 0;
 
- // Disable all Interrupts
- NVIC->ICER[0] = 0xFFFFFFFF;
- NVIC->ICER[1] = 0xFFFFFFFF;
- NVIC->ICER[2] = 0xFFFFFFFF;
- NVIC->ICER[3] = 0xFFFFFFFF;
+  // Disable all Interrupts
+  NVIC->ICER[0] = 0xFFFFFFFF;
+  NVIC->ICER[1] = 0xFFFFFFFF;
+  NVIC->ICER[2] = 0xFFFFFFFF;
+  NVIC->ICER[3] = 0xFFFFFFFF;
 
- volatile uint32_t const *app_vector = (volatile uint32_t const *)BOARD_FLASH_APP_START;
+  volatile uint32_t const *app_vector = (volatile uint32_t const *)BOARD_FLASH_APP_START;
 
   /* switch exception handlers to the application */
   SCB->VTOR = (uint32_t)BOARD_FLASH_APP_START;

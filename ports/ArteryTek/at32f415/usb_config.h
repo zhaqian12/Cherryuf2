@@ -113,10 +113,9 @@
 #endif
 
 /* ================ USB Device Port Configuration ================*/
-
-#define USBD_IRQHandler         USBFS_L_CAN1_RX0_IRQHandler
-#define USB_BASE                0x40005C00UL
-#define PMA_ACCESS              2U
+#define CONFIG_USB_DWC2_PORT    FS_PORT
+#define USBD_IRQHandler         OTGFS1_IRQHandler
+#define USB_BASE                0x50000000UL
 #define USB_NUM_BIDIR_ENDPOINTS 4
 
 /* ================ USB Host Port Configuration ==================*/

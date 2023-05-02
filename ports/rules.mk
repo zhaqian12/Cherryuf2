@@ -97,7 +97,7 @@ copy-artifact: $(BUILD)/$(OUTNAME).bin $(BUILD)/$(OUTNAME).hex
 vpath %.c . $(TOP)
 $(BUILD_OBJ)/%.o: %.c
 	@echo CC $(notdir $@)
-	@$(CC) $(CFLAGS) -c -MD -o $@ $<
+	@$(CC) $(CFLAGS) $(DEPFLAGS) -c -MD -o $@ $<
 	@# The following fixes the dependency file.
 	@# See http://make.paulandlesley.org/autodep.html for details.
 	@# Regex adjusted from the above to play better with Windows paths, etc.
