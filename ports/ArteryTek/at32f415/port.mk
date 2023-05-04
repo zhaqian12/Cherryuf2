@@ -10,6 +10,7 @@ CFLAGS += \
   -mthumb \
   -mabi=aapcs \
   -mcpu=cortex-m4 \
+  -mfloat-abi=soft \
   -nostdlib -nostartfiles
 
 # suppress warning caused by vendor mcu driver

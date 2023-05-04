@@ -32,10 +32,6 @@
 #define SECTOR_SIZE       BOARD_SECTOR_SIZE
 #define SECTOR_COUNT      BOARD_SECTOR_COUNT
 
-#define APP_LOAD_ADDRESS  BOARD_FLASH_APP_START
-
-#define BOARD_FIRST_FLASH_SECTOR_TO_ERASE 16
-
 static uint8_t erased_sectors[SECTOR_COUNT] = { 0 };
 
 static bool is_blank(uint32_t addr, uint32_t size)

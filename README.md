@@ -8,24 +8,31 @@ It only supports DFU with MSC.
 ├── bootloader            # Bin for bootloader of this repo
 ├── ports                 # Port/family specific sources
 │   ├── ArtertTek         # MCU manufacturer
-│       └── at32f413      # MCU Series
-|           └── boards/   # Board specific sources
-│           └── Makefile  # Makefile for this port         
+│   |   └── at32f413      # MCU Series
+|   |       └── boards    # Board specific sources
+│   |       └── Makefile  # Makefile for this port  
+│   |       └── port.mk   # Makefile for this port         
+│   └── ST                # MCU manufacturer
+│       └── stm32f1xx     # MCU Series
 ├── src                   # Cross-platform bootloader sources files
 ```
 
 # Support Devices
-| Manufacturer | MCU         |
-| :----------  | :---------- | 
-| ArteryTek    | AT32F403A   |
-| ArteryTek    | AT32F407    |
-| ArteryTek    | AT32F413    |
-| ArteryTek    | AT32F415    |
+| Manufacturer | MCU         | Note         |
+| :----------  | :---------- | :----------  |
+| ArteryTek    | AT32F403A   |              |
+| ArteryTek    | AT32F407    |              |
+| ArteryTek    | AT32F413    |              |
+| ArteryTek    | AT32F415    |              |
+| ST           | STM32F072   | Need to copy the vector table from the Flash to the base address of the SRAM at 0x20000000 in app           |
+| ST           | STM32F103   |              |
+| ST           | STM32G431   |              |
+| ST           | STM32L433   |              |
 
 # How to build
 ```
 $ cd ports/ArtertTek/at32f413
-$ make BOARD=at32f413cbt7
+$ make BOARD=at32f413cbt7 all
 ```
 
 # How to clean
