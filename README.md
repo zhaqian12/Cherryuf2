@@ -29,6 +29,16 @@ It only supports DFU with MSC.
 | ST           | STM32G431   |              |
 | ST           | STM32L433   |              |
 
+## Todo List
+- [ ] AT32F435/437 
+- [ ] AT32WB415
+- [ ] HC32F460 
+- [ ] CH32V307
+- [ ] CH582
+- [ ] CH32F208
+- [ ] CH32V208
+- [ ] ...
+
 # How to build
 ```
 $ cd ports/ArtertTek/at32f413
