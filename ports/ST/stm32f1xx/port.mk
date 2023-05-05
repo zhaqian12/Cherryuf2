@@ -1,4 +1,4 @@
-UF2_FAMILY_ID = 0x4c71240a
+UF2_FAMILY_ID = 0x5ee21072
 CROSS_COMPILE = arm-none-eabi-
 
 ST_DRIVERS = sdk/ST/stm32f1xx_library/stm32f1xx_hal_driver
