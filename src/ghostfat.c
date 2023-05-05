@@ -121,20 +121,20 @@ typedef struct FileContent {
 #define UF2_BYTE_COUNT                  (UF2_SECTOR_COUNT * BPB_SECTOR_SIZE) // always a multiple of sector size, per UF2 spec
 
 const char infoUf2File[] =
- "CherryUF2 Bootloader " UF2_VERSION "\r\n"
- "Model: " UF2_PRODUCT_NAME "\r\n"
- "Board-ID: " UF2_BOARD_ID "\r\n"
- "Date: " COMPILE_DATE "\r\n";
+  "CherryUF2 Bootloader" UF2_VERSION "\r\n"
+  "Model: " UF2_PRODUCT_NAME "\r\n"
+  "Board-ID: " UF2_BOARD_ID "\r\n"
+  "Date: " COMPILE_DATE "\r\n";
 
 const char indexFile[] =
- "<!doctype html>\n"
- "<html>"
- "<body>"
- "<script>\n"
- "location.replace(\"" UF2_INDEX_URL "\");\n"
- "</script>"
- "</body>"
- "</html>\n";
+  "<!doctype html>\n"
+  "<html>"
+  "<body>"
+  "<script>\n"
+  "location.replace(\"" UF2_INDEX_URL "\");\n"
+  "</script>"
+  "</body>"
+  "</html>\n";
 
 // size of CURRENT.UF2:
 static FileContent_t info[] = {
