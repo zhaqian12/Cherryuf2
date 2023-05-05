@@ -29,13 +29,14 @@ It only supports DFU with MSC.
 | ST           | STM32G431   |              |
 | ST           | STM32L433   |              |
 | WCH          | CH32V307    |              |
+| WCH          | CH582M      |              |
 
 ## Todo List
 - [ ] AT32F435/437 
 - [ ] AT32WB415
 - [ ] HC32F460 
 - [X] CH32V307
-- [ ] CH582
+- [X] CH582
 - [ ] CH32F208
 - [ ] CH32V208
 - [ ] ...
