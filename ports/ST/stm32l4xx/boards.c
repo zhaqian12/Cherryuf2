@@ -56,8 +56,18 @@ __attribute__((weak)) void board_init(void) {
     __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_GPIOC_CLK_ENABLE();
+#ifdef GPIOD
     __HAL_RCC_GPIOD_CLK_ENABLE();
+#endif
+#ifdef GPIOE
     __HAL_RCC_GPIOE_CLK_ENABLE();
+#endif
+#ifdef GPIOF
+    __HAL_RCC_GPIOF_CLK_ENABLE();
+#endif
+#ifdef GPIOG
+    __HAL_RCC_GPIOG_CLK_ENABLE();
+#endif
     __HAL_RCC_GPIOH_CLK_ENABLE();
     __HAL_RCC_SYSCFG_CLK_ENABLE();
     __HAL_RCC_PWR_CLK_ENABLE();
@@ -104,8 +114,18 @@ __attribute__((weak)) void board_app_jump(void) {
     __HAL_RCC_GPIOA_CLK_DISABLE();
     __HAL_RCC_GPIOB_CLK_DISABLE();
     __HAL_RCC_GPIOC_CLK_DISABLE();
+#ifdef GPIOD
     __HAL_RCC_GPIOD_CLK_DISABLE();
+#endif
+#ifdef GPIOE
     __HAL_RCC_GPIOE_CLK_DISABLE();
+#endif
+#ifdef GPIOF
+    __HAL_RCC_GPIOF_CLK_DISABLE();
+#endif
+#ifdef GPIOG
+    __HAL_RCC_GPIOG_CLK_DISABLE();
+#endif
     __HAL_RCC_GPIOH_CLK_DISABLE();
     __HAL_RCC_USB_CLK_DISABLE();
 

@@ -120,7 +120,7 @@ typedef struct FileContent {
 #define UF2_SECTOR_COUNT (_flash_size / UF2_FIRMWARE_BYTES_PER_SECTOR)
 #define UF2_BYTE_COUNT (UF2_SECTOR_COUNT * BPB_SECTOR_SIZE) // always a multiple of sector size, per UF2 spec
 
-const char infoUf2File[] = "CherryUF2 Bootloader" UF2_VERSION "\r\n"
+const char infoUf2File[] = "CherryUF2 Bootloader:" UF2_VERSION "\r\n"
                            "Model: " UF2_PRODUCT_NAME "\r\n"
                            "Board-ID: " UF2_BOARD_ID "\r\n"
                            "Date: " COMPILE_DATE "\r\n";

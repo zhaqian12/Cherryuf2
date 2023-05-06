@@ -82,7 +82,7 @@ static void flash_write(uint32_t dst, const uint8_t *src, int len) {
 
     for (int i = 0; i < len; i += 8) {
         uint64_t data = *((uint64_t *)((void *)(src + i)));
-        if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, dst + i, data) != HAL_OK) {
+        if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, dst + i, (uint64_t)data) != HAL_OK) {
             break;
         }
 

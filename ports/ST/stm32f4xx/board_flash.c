@@ -29,9 +29,47 @@
 //--------------------------------------------------------------------+
 #define FLASH_BASE_ADDR 0x08000000UL
 
-#define SECTOR_SIZE BOARD_SECTOR_SIZE
-#define SECTOR_COUNT BOARD_SECTOR_COUNT
+// clang-format off
+/* flash parameters that we should not really know */
+static const uint32_t sector_size[] =
+{
+  // First 4 sectors are for bootloader (64KB)
+    16 * 1024,
+	16 * 1024,
+	16 * 1024,
+	16 * 1024,
+	// Application (BOARD_FLASH_APP_START)
+	64 * 1024,
+	128 * 1024,
+	128 * 1024,
+	128 * 1024,
 
+	// flash sectors only in 1 MB devices
+	128 * 1024,
+	128 * 1024,
+	128 * 1024,
+	128 * 1024,
+
+	// flash sectors only in 2 MB devices
+	16 * 1024,
+	16 * 1024,
+	16 * 1024,
+	16 * 1024,
+	64 * 1024,
+	128 * 1024,
+	128 * 1024,
+	128 * 1024,
+	128 * 1024,
+	128 * 1024,
+	128 * 1024,
+	128 * 1024
+};
+
+enum {
+  SECTOR_COUNT = sizeof(sector_size)/sizeof(sector_size[0])
+};
+
+// clang-format on
 static uint8_t erased_sectors[SECTOR_COUNT] = {0};
 
 static bool is_blank(uint32_t addr, uint32_t size) {
@@ -52,7 +90,7 @@ static bool flash_erase(uint32_t addr) {
     uint32_t size   = 0;
     (void)sector;
     for (uint32_t i = 0; i < SECTOR_COUNT; i++) {
-        size = SECTOR_SIZE;
+        size = sector_size[i];
         if (sector_addr + size > addr) {
             sector            = i;
             erased            = erased_sectors[i];
@@ -62,16 +100,8 @@ static bool flash_erase(uint32_t addr) {
         sector_addr += size;
     }
 
-    __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_OPTVERR);
     if (!erased && !is_blank(sector_addr, size)) {
-        FLASH_EraseInitTypeDef EraseInitStruct = {0};
-        EraseInitStruct.TypeErase              = TYPEERASE_PAGES;
-        EraseInitStruct.Banks                  = FLASH_BANK_1;
-        EraseInitStruct.Page                   = sector;
-        EraseInitStruct.NbPages                = 1;
-
-        uint32_t SectorError = 0;
-        HAL_FLASHEx_Erase(&EraseInitStruct, &SectorError);
+        FLASH_Erase_Sector(sector, FLASH_VOLTAGE_RANGE_3);
         FLASH_WaitForLastOperation(HAL_MAX_DELAY);
     }
 
@@ -81,9 +111,9 @@ static bool flash_erase(uint32_t addr) {
 static void flash_write(uint32_t dst, const uint8_t *src, int len) {
     flash_erase(dst);
 
-    for (int i = 0; i < len; i += 8) {
-        uint64_t data = *((uint64_t *)((void *)(src + i)));
-        if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, dst + i, (uint64_t)data) != HAL_OK) {
+    for (int i = 0; i < len; i += 4) {
+        uint32_t data = *((uint32_t *)((void *)(src + i)));
+        if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, dst + i, (uint64_t)data) != HAL_OK) {
             break;
         }
 
