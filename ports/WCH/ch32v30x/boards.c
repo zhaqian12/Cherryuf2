@@ -164,7 +164,7 @@ void _init(void) {}
 void SW_Handler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 void SW_Handler(void) {
     // need to improve
-    __asm("li  a6, 0x5000");
+    __asm("li  a6, 0x4000");
     __asm("jr  a6");
 
     while (1)
