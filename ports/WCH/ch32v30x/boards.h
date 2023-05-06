@@ -36,7 +36,7 @@ extern "C" {
 
 // Flash Start Address of Application
 #ifndef BOARD_FLASH_APP_START
-#    define BOARD_FLASH_APP_START 0x00005000
+#    define BOARD_FLASH_APP_START 0x00004000
 #endif
 
 // Double Reset tap to enter DFU
