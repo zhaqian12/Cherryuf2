@@ -27,6 +27,7 @@
 
 #include "at32f415.h"
 
+// clang-format off
 //--------------------------------------------------------------------+
 // LED
 //--------------------------------------------------------------------+
@@ -54,40 +55,37 @@
 #define UF2_VOLUME_LABEL      "Zhaqian"
 #define UF2_INDEX_URL         "https://www.arterytek.com/cn/index.jsp"
 
+// clang-format on
 //--------------------------------------------------------------------+
 // CLOCK
 //--------------------------------------------------------------------+
-static inline void clock_init(void)
-{
-  crm_reset();
+static inline void clock_init(void) {
+    crm_reset();
 
-  flash_psr_set(FLASH_WAIT_CYCLE_4);
+    flash_psr_set(FLASH_WAIT_CYCLE_4);
 
-  crm_clock_source_enable(CRM_CLOCK_SOURCE_HEXT, TRUE);
-  while(crm_hext_stable_wait() == ERROR)
-  {
-  }
+    crm_clock_source_enable(CRM_CLOCK_SOURCE_HEXT, TRUE);
+    while (crm_hext_stable_wait() == ERROR)
+        ;
 
-  crm_pll_config(CRM_PLL_SOURCE_HEXT, CRM_PLL_MULT_18);
+    crm_pll_config(CRM_PLL_SOURCE_HEXT, CRM_PLL_MULT_18);
 
-  crm_clock_source_enable(CRM_CLOCK_SOURCE_PLL, TRUE);
-  while(crm_flag_get(CRM_PLL_STABLE_FLAG) != SET)
-  {
-  }
+    crm_clock_source_enable(CRM_CLOCK_SOURCE_PLL, TRUE);
+    while (crm_flag_get(CRM_PLL_STABLE_FLAG) != SET)
+        ;
 
-  crm_ahb_div_set(CRM_AHB_DIV_1);
-  crm_apb2_div_set(CRM_APB2_DIV_2);
-  crm_apb1_div_set(CRM_APB1_DIV_2);
-  crm_usb_clock_div_set(CRM_USB_DIV_3);
+    crm_ahb_div_set(CRM_AHB_DIV_1);
+    crm_apb2_div_set(CRM_APB2_DIV_2);
+    crm_apb1_div_set(CRM_APB1_DIV_2);
+    crm_usb_clock_div_set(CRM_USB_DIV_3);
 
-  crm_auto_step_mode_enable(TRUE);
+    crm_auto_step_mode_enable(TRUE);
 
-  crm_sysclk_switch(CRM_SCLK_PLL);
-  while(crm_sysclk_switch_status_get() != CRM_SCLK_PLL)
-  {
-  }
+    crm_sysclk_switch(CRM_SCLK_PLL);
+    while (crm_sysclk_switch_status_get() != CRM_SCLK_PLL)
+        ;
 
-  crm_auto_step_mode_enable(FALSE);
-  crm_periph_clock_enable(CRM_PWC_PERIPH_CLOCK, TRUE);
+    crm_auto_step_mode_enable(FALSE);
+    crm_periph_clock_enable(CRM_PWC_PERIPH_CLOCK, TRUE);
 }
 #endif

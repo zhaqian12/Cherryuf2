@@ -26,7 +26,7 @@
 #define BOARDS_H_
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 #include "ch32v30x.h"
@@ -36,14 +36,14 @@
 
 // Flash Start Address of Application
 #ifndef BOARD_FLASH_APP_START
-#define BOARD_FLASH_APP_START   0x00005000
+#    define BOARD_FLASH_APP_START 0x00005000
 #endif
 
 // Double Reset tap to enter DFU
-#define CHERRYUF2_DFU_DOUBLE_TAP  1
+#define CHERRYUF2_DFU_DOUBLE_TAP 1
 
 #ifdef __cplusplus
- }
+}
 #endif
 
 #endif /* BOARDS_H_ */

@@ -25,7 +25,7 @@
 #ifndef BOARD_H_
 #define BOARD_H_
 
-#include "stm32f0xx.h"
+#include "stm32f1xx.h"
 
 // clang-format off
 //--------------------------------------------------------------------+
@@ -48,39 +48,48 @@
 #define USBD_VID            0x00AA
 #define USBD_PID            0xAAFF
 #define USB_MANUFACTURER    "Zhaqian"
-#define USB_PRODUCT         "STM32F072"
+#define USB_PRODUCT         "AIR32F103"
 
 #define UF2_PRODUCT_NAME    USB_MANUFACTURER " " USB_PRODUCT
-#define UF2_BOARD_ID        "STM32F072xB"
+#define UF2_BOARD_ID        "AIR32F103xB"
 #define UF2_VOLUME_LABEL    "Zhaqian"
-#define UF2_INDEX_URL       "https://www.st.com/content/st_com/en.html"
+#define UF2_INDEX_URL       "https://wiki.luatos.com/chips/air32f103/mcu.html#id3"
+
+#define USB_DP_PUUP        (volatile uint32_t *)(0x40005C00UL + 0x54) 
 
 // clang-format on
 //--------------------------------------------------------------------+
 // CLOCK
 //--------------------------------------------------------------------+
-static inline void clock_init(void) {
-    RCC_OscInitTypeDef       RCC_OscInitStruct = {0};
-    RCC_ClkInitTypeDef       RCC_ClkInitStruct = {0};
-    RCC_PeriphCLKInitTypeDef PeriphClkInit     = {0};
+static inline void clock_init(void)
+{
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
-    RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI48;
-    RCC_OscInitStruct.HSEState       = RCC_HSE_OFF;
-    RCC_OscInitStruct.HSI48State     = RCC_HSI48_ON;
-    RCC_OscInitStruct.PLL.PLLState   = RCC_PLL_ON;
-    RCC_OscInitStruct.PLL.PLLSource  = RCC_PLLSOURCE_HSI;
-    RCC_OscInitStruct.PLL.PLLMUL     = RCC_PLL_MUL6;
-    RCC_OscInitStruct.PLL.PREDIV     = RCC_PREDIV_DIV1;
-    HAL_RCC_OscConfig(&RCC_OscInitStruct);
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
+  HAL_RCC_OscConfig(&RCC_OscInitStruct);
 
-    RCC_ClkInitStruct.ClockType      = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1;
-    RCC_ClkInitStruct.SYSCLKSource   = RCC_SYSCLKSOURCE_PLLCLK;
-    RCC_ClkInitStruct.AHBCLKDivider  = RCC_SYSCLK_DIV1;
-    RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-    HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1);
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+  HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2);
 
-    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USB;
-    PeriphClkInit.UsbClockSelection    = RCC_USBCLKSOURCE_HSI48;
-    HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit);
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USB;
+  PeriphClkInit.UsbClockSelection = RCC_USBCLKSOURCE_PLL_DIV1_5;
+  HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit);
+}
+
+static inline void usb_config(void)
+{
+  *USB_DP_PUUP |= 0x1U;
 }
 #endif

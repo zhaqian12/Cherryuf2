@@ -27,110 +27,95 @@
 //--------------------------------------------------------------------+
 // CherryUSB LLD
 //--------------------------------------------------------------------+
-void usb_dc_low_level_init(void)
-{
-  extern void USB_IRQHandler(void);
-  PFIC_EnableIRQ(USB_IRQn);
-  PFIC_EnableFastINT0(USB_IRQn, (uint32_t)(void *)USB_IRQHandler);
+__attribute__((weak)) void usb_dc_low_level_init(void) {
+    extern void USB_IRQHandler(void);
+    PFIC_EnableIRQ(USB_IRQn);
+    PFIC_EnableFastINT0(USB_IRQn, (uint32_t)(void *)USB_IRQHandler);
 }
 
 //--------------------------------------------------------------------+
 // Boards api
 //--------------------------------------------------------------------+
-void board_init(void)
-{
-  clock_init();
-  board_timer_stop();
+__attribute__((weak)) void board_init(void) {
+    clock_init();
+    board_timer_stop();
 
 #ifdef LED_PIN
-  LED_PIN_MODE_CFG(LED_PIN, GPIO_ModeOut_PP_20mA);
+    LED_PIN_MODE_CFG(LED_PIN, GPIO_ModeOut_PP_20mA);
 
-  board_led_write(1);
+    board_led_write(1);
 #endif
 }
 
-void board_dfu_complete(void)
-{
-  SYS_ResetExecute();
+__attribute__((weak)) void board_dfu_complete(void) {
+    SYS_ResetExecute();
 }
 
-void board_usb_process(void)
-{
-  // todo
+__attribute__((weak)) void board_usb_process(void) {
+    // todo
 }
 
-bool board_app_valid(void)
-{
-  // need to improve
-  const uint32_t val = *(volatile uint32_t const *)BOARD_FLASH_APP_START;
+__attribute__((weak)) bool board_app_valid(void) {
+    // need to improve
+    const uint32_t val = *(volatile uint32_t const *)BOARD_FLASH_APP_START;
 
-  return (val != 0xf3f9bda9);
+    return (val != 0xf3f9bda9);
 }
 
-void board_app_jump(void)
-{
+__attribute__((weak)) void board_app_jump(void) {
 #ifdef LED_PIN
-  LED_PIN_MODE_CFG(LED_PIN, GPIO_ModeIN_Floating);
+    LED_PIN_MODE_CFG(LED_PIN, GPIO_ModeIN_Floating);
 #endif
-  R32_USB_CONTROL = 0;
+    R32_USB_CONTROL = 0;
 
-  SysTick->CTLR = 0;
-  SysTick->SR = 0;
-  SysTick->CNT = 0;
-  SysTick->CMP = 0;
+    SysTick->CTLR = 0;
+    SysTick->SR   = 0;
+    SysTick->CNT  = 0;
+    SysTick->CMP  = 0;
 
-  uint32_t irq_status;
-  SYS_DisableAllIrq(&irq_status);
+    uint32_t irq_status;
+    SYS_DisableAllIrq(&irq_status);
 
-  BOOT_JUMP();
+    BOOT_JUMP();
 }
 
 //--------------------------------------------------------------------+
 // LED
 //--------------------------------------------------------------------+
-void board_led_write(uint32_t state)
-{
+void board_led_write(uint32_t state) {
+    (void)state;
 #ifdef LED_PIN
-  uint32_t sts = state ? LED_STATE_ON : (1 - LED_STATE_ON);
-  if (sts)
-  {
-    LED_PIN_SETBITS(LED_PIN);
-  }
-  else
-  {
-    LED_PIN_RESETBITS(LED_PIN);
-  }
+    uint32_t sts = state ? LED_STATE_ON : (1 - LED_STATE_ON);
+    if (sts) {
+        LED_PIN_SETBITS(LED_PIN);
+    } else {
+        LED_PIN_RESETBITS(LED_PIN);
+    }
 #endif
 }
 
 //--------------------------------------------------------------------+
 // Timer
 //--------------------------------------------------------------------+
-void board_timer_start(uint32_t ms)
-{
-  SysTick_Config((GetSysClock() / 1000) * ms);
+void board_timer_start(uint32_t ms) {
+    SysTick_Config((GetSysClock() / 1000) * ms);
 }
 
-void board_timer_stop(void)
-{
-  SysTick->CTLR &= ~(1 << 0);
+void board_timer_stop(void) {
+    SysTick->CTLR &= ~(1 << 0);
 }
 
 __INTERRUPT
 __HIGH_CODE
-void SysTick_Handler(void)
-{
-  SysTick->SR = 0;
-  board_timer_handler();
+void SysTick_Handler(void) {
+    SysTick->SR = 0;
+    board_timer_handler();
 }
 
-int board_uart_write(void const *buf, int len)
-{
-  (void)buf;
-  (void)len;
-  return 0;
+int board_uart_write(void const *buf, int len) {
+    (void)buf;
+    (void)len;
+    return 0;
 }
 
-void _init(void)
-{
-}
+void _init(void) {}

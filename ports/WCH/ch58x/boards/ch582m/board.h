@@ -27,6 +27,7 @@
 
 #include "CH58x_common.h"
 
+// clang-format off
 //--------------------------------------------------------------------+
 // LED
 //--------------------------------------------------------------------+
@@ -57,13 +58,13 @@
 #define UF2_VOLUME_LABEL    "Zhaqian"
 #define UF2_INDEX_URL       "https://www.wch.cn/products/CH583.html"
 
+// clang-format on
 //--------------------------------------------------------------------+
 // CLOCK
 //--------------------------------------------------------------------+
-static inline void clock_init(void)
-{
-  // TODO
-  SetSysClock(CLK_SOURCE_PLL_60MHz);
+static inline void clock_init(void) {
+    // TODO
+    SetSysClock(CLK_SOURCE_PLL_60MHz);
 }
 
 #endif

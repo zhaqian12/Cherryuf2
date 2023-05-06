@@ -1,4 +1,4 @@
-# List of git submodules that is included as part of the UF2 version
+# Port Makefile
 PORTS ?= WCH
 include ../../make.mk
 include port.mk

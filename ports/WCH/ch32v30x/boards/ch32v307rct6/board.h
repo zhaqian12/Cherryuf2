@@ -27,6 +27,7 @@
 
 #include "ch32v30x.h"
 
+// clang-format off
 //--------------------------------------------------------------------+
 // LED
 //--------------------------------------------------------------------+
@@ -54,12 +55,12 @@
 #define UF2_VOLUME_LABEL    "Zhaqian"
 #define UF2_INDEX_URL       "https://www.wch.cn/products/CH32V307.html"
 
+// clang-format on
 //--------------------------------------------------------------------+
 // CLOCK
 //--------------------------------------------------------------------+
-static inline void clock_init(void)
-{
-  // TODO
+static inline void clock_init(void) {
+    // TODO
 }
 
 #endif

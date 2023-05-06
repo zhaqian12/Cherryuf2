@@ -1,4 +1,4 @@
-UF2_FAMILY_ID = 0x4c71240a
+UF2_FAMILY_ID ?= 0x4c71240a
 CROSS_COMPILE = arm-none-eabi-
 
 ST_DRIVERS = sdk/ST/stm32g4xx_library/stm32g4xx_hal_driver

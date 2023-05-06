@@ -26,6 +26,7 @@
 #ifndef COMPILE_DATE_H
 #define COMPILE_DATE_H
 
+// clang-format off
 // Help enable build to be deterministic.
 // Allows Ghostfat to generate 100% reproducible images across compilations.
 // Reproducible builds are also important for other reasons.

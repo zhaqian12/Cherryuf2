@@ -1,6 +1,6 @@
-UF2_FAMILY_ID = 0xf3d9b2c9
-
-CROSS_COMPILE = riscv-none-embed-
+UF2_FAMILY_ID ?= 0xf3d9b2c9
+TOOLCHAIN_ROOT ?= /E/MounRiver/MounRiver_Studio/toolchain/RISC-VEmbeddedGCC/bin
+CROSS_COMPILE = $(TOOLCHAIN_ROOT)/riscv-none-embed-
 
 WCH_CMSIS = sdk/WCH/ch32v30x_library
 WCH_DRIVERS = $(WCH_CMSIS)/Peripheral

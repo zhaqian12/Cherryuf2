@@ -27,7 +27,7 @@
 //--------------------------------------------------------------------+
 // CherryUSB LLD
 //--------------------------------------------------------------------+
-void usb_dc_low_level_init(void)
+__attribute__((weak)) void usb_dc_low_level_init(void)
 {
   /* Peripheral clock enable */
   __HAL_RCC_USB_CLK_ENABLE();
@@ -39,7 +39,7 @@ void usb_dc_low_level_init(void)
 //--------------------------------------------------------------------+
 // Boards api
 //--------------------------------------------------------------------+
-void board_init(void)
+__attribute__((weak)) void board_init(void)
 {
   clock_init();
   SystemCoreClockUpdate();
@@ -73,17 +73,17 @@ void board_init(void)
 #endif
 }
 
-void board_dfu_complete(void)
+__attribute__((weak)) void board_dfu_complete(void)
 {
   NVIC_SystemReset();
 }
 
-void board_usb_process(void)
+__attribute__((weak)) void board_usb_process(void)
 {
   // todo
 }
 
-bool board_app_valid(void)
+__attribute__((weak)) bool board_app_valid(void)
 {
   volatile uint32_t const *app_vector = (volatile uint32_t const *)BOARD_FLASH_APP_START;
 
@@ -96,7 +96,7 @@ bool board_app_valid(void)
   return true;
 }
 
-void board_app_jump(void)
+__attribute__((weak)) void board_app_jump(void)
 {
 #ifdef LED_PIN
   HAL_GPIO_DeInit(LED_PORT, LED_PIN);
@@ -138,7 +138,10 @@ void board_app_jump(void)
 //--------------------------------------------------------------------+
 void board_led_write(uint32_t state)
 {
+  (void)state;
+#ifdef LED_PIN
   HAL_GPIO_WritePin(LED_PORT, LED_PIN, state ? LED_STATE_ON : (1 - LED_STATE_ON));
+#endif
 }
 
 //--------------------------------------------------------------------+

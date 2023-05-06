@@ -1,4 +1,4 @@
-UF2_FAMILY_ID = 0x6a1b09b4
+UF2_FAMILY_ID ?= 0x6a1b09b4
 CROSS_COMPILE = arm-none-eabi-
 
 AT_DRIVERS = sdk/ArteryTek/at32f415_library/libraries/drivers

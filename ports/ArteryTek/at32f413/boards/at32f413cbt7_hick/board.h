@@ -27,6 +27,7 @@
 
 #include "at32f413.h"
 
+// clang-format off
 //--------------------------------------------------------------------+
 // LED
 //--------------------------------------------------------------------+
@@ -54,17 +55,17 @@
 #define UF2_VOLUME_LABEL      "Zhaqian"
 #define UF2_INDEX_URL         "https://www.arterytek.com/cn/index.jsp"
 
+// clang-format on
 //--------------------------------------------------------------------+
 // CLOCK
 //--------------------------------------------------------------------+
-static inline void clock_init(void)
-{
-  crm_reset();
-  crm_ahb_div_set(CRM_AHB_DIV_1);
-  crm_apb2_div_set(CRM_APB2_DIV_1);
-  crm_apb1_div_set(CRM_APB1_DIV_1);
-  crm_usb_clock_source_select(CRM_USB_CLOCK_SOURCE_HICK);
-  crm_periph_clock_enable(CRM_PWC_PERIPH_CLOCK, TRUE);
-  crm_periph_clock_enable(CRM_BPR_PERIPH_CLOCK, TRUE);
+static inline void clock_init(void) {
+    crm_reset();
+    crm_ahb_div_set(CRM_AHB_DIV_1);
+    crm_apb2_div_set(CRM_APB2_DIV_1);
+    crm_apb1_div_set(CRM_APB1_DIV_1);
+    crm_usb_clock_source_select(CRM_USB_CLOCK_SOURCE_HICK);
+    crm_periph_clock_enable(CRM_PWC_PERIPH_CLOCK, TRUE);
+    crm_periph_clock_enable(CRM_BPR_PERIPH_CLOCK, TRUE);
 }
 #endif
