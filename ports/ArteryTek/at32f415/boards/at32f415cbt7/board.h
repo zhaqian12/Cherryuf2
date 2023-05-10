@@ -47,13 +47,13 @@
 //--------------------------------------------------------------------+
 #define USBD_VID              0x00AA
 #define USBD_PID              0xAAFF
-#define USB_MANUFACTURER      "Zhaqian"
+#define USB_MANUFACTURER      "ArteryTek"
 #define USB_PRODUCT           "AT32F415"
 
 #define UF2_PRODUCT_NAME      USB_MANUFACTURER " " USB_PRODUCT
 #define UF2_BOARD_ID          "AT32F415xB"
-#define UF2_VOLUME_LABEL      "Zhaqian"
-#define UF2_INDEX_URL         "https://www.arterytek.com/cn/index.jsp"
+#define UF2_VOLUME_LABEL      "CherryUF2"
+#define UF2_INDEX_URL         "https://www.arterytek.com/cn/product/AT32F415.jsp"
 
 // clang-format on
 //--------------------------------------------------------------------+

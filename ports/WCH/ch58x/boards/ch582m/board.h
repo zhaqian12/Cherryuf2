@@ -50,12 +50,12 @@
 //--------------------------------------------------------------------+
 #define USBD_VID            0x00AA
 #define USBD_PID            0xAAFF
-#define USB_MANUFACTURER    "Zhaqian"
+#define USB_MANUFACTURER    "WCH"
 #define USB_PRODUCT         "CH582M"
 
 #define UF2_PRODUCT_NAME    USB_MANUFACTURER " " USB_PRODUCT
 #define UF2_BOARD_ID        "CH582M"
-#define UF2_VOLUME_LABEL    "Zhaqian"
+#define UF2_VOLUME_LABEL    "CherryUF2"
 #define UF2_INDEX_URL       "https://www.wch.cn/products/CH583.html"
 
 // clang-format on

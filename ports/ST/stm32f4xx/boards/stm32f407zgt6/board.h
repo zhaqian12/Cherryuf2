@@ -45,13 +45,13 @@
 //--------------------------------------------------------------------+
 #define USBD_VID            0x00AA
 #define USBD_PID            0xAAFF
-#define USB_MANUFACTURER    "Zhaqian"
+#define USB_MANUFACTURER    "STMicroelectronics"
 #define USB_PRODUCT         "STM32F407"
 
 #define UF2_PRODUCT_NAME    USB_MANUFACTURER " " USB_PRODUCT
 #define UF2_BOARD_ID        "STM32F407xG"
-#define UF2_VOLUME_LABEL    "Zhaqian"
-#define UF2_INDEX_URL       "https://www.st.com/content/st_com/en.html"
+#define UF2_VOLUME_LABEL    "CherryUF2"
+#define UF2_INDEX_URL       "https://www.st.com/en/microcontrollers-microprocessors/stm32f4-series.html"
 
 // clang-format on
 //--------------------------------------------------------------------+
