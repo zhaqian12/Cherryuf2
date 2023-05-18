@@ -33,13 +33,11 @@ It only supports DFU with MSC.
 | ST           | STM32L433   |              |
 | WCH          | CH32V307    |              |
 | WCH          | CH582M      |              |
+| HDSC         | HC32F460    | Some problems with usb.And need to config icg if you want to use it in app.             |
 
 ## Todo List
 - [ ] AT32F435/437 
 - [ ] AT32WB415
-- [ ] HC32F460 
-- [X] CH32V307
-- [X] CH582
 - [ ] CH32F208
 - [ ] CH32V208
 - [ ] ...

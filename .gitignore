@@ -4,3 +4,7 @@ keil
 .vscode
 *.sh
 *.py
+*.svd
+*.cfg
+*.json
+*.zip
