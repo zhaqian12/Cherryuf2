@@ -27,59 +27,63 @@
 //--------------------------------------------------------------------+
 // CherryUSB LLD
 //--------------------------------------------------------------------+
+
 __attribute__((weak)) void usb_dc_low_level_init(void) {
-    stc_gpio_init_t       stcGpioCfg;
-    stc_clock_pllx_init_t stcUpllInit;
+    gpio_init_type gpio_init_struct;
 
-    (void)CLK_PLLxStructInit(&stcUpllInit);
-    stcUpllInit.u8PLLState     = CLK_PLLX_ON;
-    stcUpllInit.PLLCFGR        = 0UL;
-    stcUpllInit.PLLCFGR_f.PLLM = (XTAL_VALUE / 1000000UL) - 1UL;
-    stcUpllInit.PLLCFGR_f.PLLN = (336UL - 1UL);
-    stcUpllInit.PLLCFGR_f.PLLR = (7UL - 1UL);
-    stcUpllInit.PLLCFGR_f.PLLQ = (7UL - 1UL);
-    stcUpllInit.PLLCFGR_f.PLLP = (7UL - 1UL);
-    (void)CLK_PLLxInit(&stcUpllInit);
+    gpio_default_para_init(&gpio_init_struct);
 
-    CLK_SetUSBClockSrc(CLK_USBCLK_PLLXP);
+    gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_STRONGER;
+    gpio_init_struct.gpio_out_type       = GPIO_OUTPUT_PUSH_PULL;
+    gpio_init_struct.gpio_mode           = GPIO_MODE_MUX;
+    gpio_init_struct.gpio_pull           = GPIO_PULL_NONE;
 
-    (void)GPIO_StructInit(&stcGpioCfg);
-    stcGpioCfg.u16PinAttr = PIN_ATTR_ANALOG;
-    (void)GPIO_Init(GPIO_PORT_A, GPIO_PIN_11, &stcGpioCfg);
-    (void)GPIO_Init(GPIO_PORT_A, GPIO_PIN_12, &stcGpioCfg);
-    GPIO_SetFunc(GPIO_PORT_A, GPIO_PIN_09, GPIO_FUNC_10);
-    FCG_Fcg1PeriphClockCmd(FCG1_PERIPH_USBFS, ENABLE);
+#ifdef OTG_SOF_OUTPUT_ENABLE
+    gpio_init_struct.gpio_pins = GPIO_PINS_8;
+    gpio_init(GPIOA, &gpio_init_struct);
+    gpio_pin_mux_config(GPIOA, GPIO_PINS_SOURCE8, GPIO_MUX_3);
+#endif
 
-    stc_irq_signin_config_t stcIrqRegiConf;
-    stcIrqRegiConf.enIRQn      = INT024_IRQn;
-    stcIrqRegiConf.enIntSrc    = INT_SRC_USBFS_GLB;
-    stcIrqRegiConf.pfnCallback = &USB_IRQ_Handler;
-    (void)INTC_IrqSignIn(&stcIrqRegiConf);
-    NVIC_ClearPendingIRQ(stcIrqRegiConf.enIRQn);
-    NVIC_SetPriority(stcIrqRegiConf.enIRQn, DDL_IRQ_PRIO_15);
-    NVIC_EnableIRQ(stcIrqRegiConf.enIRQn);
+#ifndef OTG_VBUS_IGNORE
+    gpio_init_struct.gpio_pins = GPIO_PINS_9;
+    gpio_init_struct.gpio_pull = GPIO_PULL_DOWN;
+    gpio_pin_mux_config(GPIOA, GPIO_PINS_SOURCE9, GPIO_MUX_3);
+    gpio_init(GPIOA, &gpio_init_struct);
+#endif
+
+    /* Peripheral clock enable */
+    crm_periph_clock_enable(CRM_OTGFS1_PERIPH_CLOCK, TRUE);
+    /* USB interrupt Init */
+    nvic_irq_enable(OTGFS1_IRQn, 0, 0);
 }
 
 //--------------------------------------------------------------------+
 // Boards api
 //--------------------------------------------------------------------+
-
 __attribute__((weak)) void board_init(void) {
-    LL_PERIPH_WE(LL_PERIPH_GPIO | LL_PERIPH_EFM | LL_PERIPH_FCG | LL_PERIPH_PWC_CLK_RMU | LL_PERIPH_SRAM);
-
-    EFM_FWMC_Cmd(ENABLE);
+    nvic_priority_group_config(NVIC_PRIORITY_GROUP_4);
 
     clock_init();
-
-    SystemCoreClockUpdate();
+    system_core_clock_update();
 
     board_timer_stop();
 
+    crm_periph_clock_enable(CRM_GPIOA_PERIPH_CLOCK, TRUE);
+    // crm_periph_clock_enable(CRM_GPIOB_PERIPH_CLOCK, TRUE);
+    // crm_periph_clock_enable(CRM_GPIOC_PERIPH_CLOCK, TRUE);
+    // crm_periph_clock_enable(CRM_GPIOD_PERIPH_CLOCK, TRUE);
+    // crm_periph_clock_enable(CRM_GPIOF_PERIPH_CLOCK, TRUE);
+
 #ifdef LED_PIN
-    stc_gpio_init_t stcGpioInit;
-    (void)GPIO_StructInit(&stcGpioInit);
-    stcGpioInit.u16PinDir = PIN_DIR_OUT;
-    (void)GPIO_Init(LED_PORT, LED_PIN, &stcGpioInit);
+    gpio_init_type gpio_init_struct;
+
+    gpio_default_para_init(&gpio_init_struct);
+    gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_STRONGER;
+    gpio_init_struct.gpio_out_type       = GPIO_OUTPUT_PUSH_PULL;
+    gpio_init_struct.gpio_mode           = GPIO_MODE_OUTPUT;
+    gpio_init_struct.gpio_pins           = LED_PIN;
+    gpio_init_struct.gpio_pull           = GPIO_PULL_NONE;
+    gpio_init(LED_PORT, &gpio_init_struct);
 
     board_led_write(1);
 #endif
@@ -89,7 +93,8 @@ __attribute__((weak)) void board_dfu_complete(void) {
     NVIC_SystemReset();
 }
 
-__attribute__((weak)) void board_usb_process(void) {}
+__attribute__((weak)) void board_usb_process(void) {
+}
 
 __attribute__((weak)) bool board_app_valid(void) {
     volatile uint32_t const *app_vector = (volatile uint32_t const *)BOARD_FLASH_APP_START;
@@ -103,15 +108,20 @@ __attribute__((weak)) bool board_app_valid(void) {
 }
 
 __attribute__((weak)) void board_app_jump(void) {
-    GPIO_DeInit();
+#ifdef LED_PIN
+    gpio_reset(LED_PORT);
+#endif
+#if defined(OTG_SOF_OUTPUT_ENABLE) || !defined(OTG_VBUS_IGNORE)
+    gpio_reset(GPIOA);
+#endif
+    crm_periph_clock_enable(CRM_GPIOA_PERIPH_CLOCK, FALSE);
+    //  crm_periph_clock_enable(CRM_GPIOB_PERIPH_CLOCK, FALSE);
+    //  crm_periph_clock_enable(CRM_GPIOC_PERIPH_CLOCK, FALSE);
+    // crm_periph_clock_enable(CRM_GPIOD_PERIPH_CLOCK, FALSE);
+    //  crm_periph_clock_enable(CRM_GPIOF_PERIPH_CLOCK, FALSE);
 
-    FCG_Fcg1PeriphClockCmd(FCG1_PERIPH_USBFS, DISABLE);
-
-    EFM_FWMC_Cmd(DISABLE);
-
-    clock_deinit();
-
-    LL_PERIPH_WP(LL_PERIPH_EFM | LL_PERIPH_FCG | LL_PERIPH_SRAM);
+    crm_periph_clock_enable(CRM_OTGFS1_PERIPH_CLOCK, FALSE);
+    crm_reset();
 
     SysTick->CTRL = 0;
     SysTick->LOAD = 0;
@@ -139,12 +149,7 @@ __attribute__((weak)) void board_app_jump(void) {
 void board_led_write(uint32_t state) {
     (void)state;
 #ifdef LED_PIN
-    uint32_t sts = state ? LED_STATE_ON : (1 - LED_STATE_ON);
-    if (sts) {
-        GPIO_SetPins(LED_PORT, LED_PIN);
-    } else {
-        GPIO_ResetPins(LED_PORT, LED_PIN);
-    }
+    gpio_bits_write(LED_PORT, LED_PIN, state ? LED_STATE_ON : (1 - LED_STATE_ON));
 #endif
 }
 

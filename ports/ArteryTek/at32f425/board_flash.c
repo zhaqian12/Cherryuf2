@@ -27,7 +27,7 @@
 //--------------------------------------------------------------------+
 // FLASH
 //--------------------------------------------------------------------+
-#define FLASH_BASE_ADDR 0x00000000UL
+#define FLASH_BASE_ADDR 0x08000000UL
 
 #define SECTOR_SIZE BOARD_SECTOR_SIZE
 #define SECTOR_COUNT BOARD_SECTOR_COUNT
@@ -63,7 +63,7 @@ static bool flash_erase(uint32_t addr) {
     }
 
     if (!erased && !is_blank(sector_addr, size)) {
-        EFM_SectorErase(sector_addr);
+        flash_sector_erase(sector_addr);
     }
 
     return true;
@@ -74,7 +74,11 @@ static void flash_write(uint32_t dst, const uint8_t *src, int len) {
 
     for (int i = 0; i < len; i += 4) {
         uint32_t data = *((uint32_t *)((void *)(src + i)));
-        EFM_ProgramWord(dst + i, data);
+        flash_word_program(dst + i, data);
+    }
+
+    // verify contents
+    if (memcmp((void *)dst, src, len) != 0) {
     }
 }
 
@@ -94,7 +98,9 @@ __attribute__((weak)) void board_flash_read(uint32_t addr, void *buffer, uint32_
 __attribute__((weak)) void board_flash_flush(void) {}
 
 __attribute__((weak)) void board_flash_write(uint32_t addr, void const *data, uint32_t len) {
+    flash_unlock();
     flash_write(addr, data, len);
+    flash_lock();
 }
 
 __attribute__((weak)) void board_flash_erase_app(void) {}

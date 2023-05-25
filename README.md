@@ -24,6 +24,9 @@ It only supports DFU with MSC.
 | ArteryTek    | AT32F407    |              |
 | ArteryTek    | AT32F413    |              |
 | ArteryTek    | AT32F415    |              |
+| ArteryTek    | AT32F425    |              |
+| ArteryTek    | AT32F435    |              |
+| ArteryTek    | AT32F437    |              |
 | ST           | STM32F072   | Need to copy the vector table from the Flash to the base address of the SRAM at 0x20000000 in app           |
 | ST           | STM32F103   |              |
 | ST           | STM32F401   |              |
@@ -36,10 +39,9 @@ It only supports DFU with MSC.
 | HDSC         | HC32F460    | Some problems with usb.And need to config icg if you want to use it in app.             |
 
 ## Todo List
-- [ ] AT32F435/437 
 - [ ] AT32WB415
-- [ ] CH32F208
-- [ ] CH32V208
+- [ ] CH32F20X
+- [ ] CH32V20X
 - [ ] ...
 
 # How to build
