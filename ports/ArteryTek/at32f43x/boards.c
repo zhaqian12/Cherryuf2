@@ -37,41 +37,29 @@ __attribute__((weak)) void usb_dc_low_level_init(void) {
     gpio_init_struct.gpio_mode           = GPIO_MODE_MUX;
     gpio_init_struct.gpio_pull           = GPIO_PULL_NONE;
 
-    gpio_init_struct.gpio_pins = GPIO_PINS_12 | GPIO_PINS_11;
-    // gpio_init_struct.gpio_pins = GPIO_PINS_14 | GPIO_PINS_15;
-    gpio_init(GPIOA, &gpio_init_struct);
-    // gpio_init(GPIOB, &gpio_init_struct);
+    gpio_init_struct.gpio_pins = OTG_DM_PIN | OTG_DP_PIN;
+    gpio_init(OTG_PORT, &gpio_init_struct);
 
-    gpio_pin_mux_config(GPIOA, GPIO_PINS_SOURCE12, GPIO_MUX_3);
-    gpio_pin_mux_config(GPIOA, GPIO_PINS_SOURCE11, GPIO_MUX_3);
-    // gpio_pin_mux_config(GPIOB, GPIO_PINS_SOURCE15, GPIO_MUX_3);
-    // gpio_pin_mux_config(GPIOB, GPIO_PINS_SOURCE14, GPIO_MUX_3);
+    gpio_pin_mux_config(OTG_PORT, OTG_DM_MUX_SOURCE, GPIO_MUX_3);
+    gpio_pin_mux_config(OTG_PORT, OTG_DP_MUX_SOURCE, GPIO_MUX_3);
 
 #ifdef OTG_SOF_OUTPUT_ENABLE
-    gpio_init_struct.gpio_pins = GPIO_PINS_8;
-    // gpio_init_struct.gpio_pins = GPIO_PINS_4;
-    gpio_init(GPIOA, &gpio_init_struct);
-    gpio_pin_mux_config(GPIOA, GPIO_PINS_SOURCE8, GPIO_MUX_3);
+    gpio_init_struct.gpio_pins = OTG_SOF_PIN;
+    gpio_init(OTG_SOF_PORT, &gpio_init_struct);
+    gpio_pin_mux_config(OTG_SOF_PORT, OTG_SOF_MUX_SOURCE, GPIO_MUX_3);
 #endif
 
 #ifndef OTG_VBUS_IGNORE
-    gpio_init_struct.gpio_pins = GPIO_PINS_9;
-    // gpio_init_struct.gpio_pins = GPIO_PINS_13;
+    gpio_init_struct.gpio_pins = OTG_VBUS_PIN;
     gpio_init_struct.gpio_pull = GPIO_PULL_DOWN;
-    gpio_pin_mux_config(GPIOA, GPIO_PINS_SOURCE9, GPIO_MUX_3);
-    gpio_init(GPIOA, &gpio_init_struct);
-    // gpio_pin_mux_config(GPIOB, GPIO_PINS_SOURCE13, GPIO_MUX_3);
-    // gpio_init(GPIOB, &gpio_init_struct);
+    gpio_pin_mux_config(OTG_PORT, OTG_VBUS_MUX_SOURCE, GPIO_MUX_3);
+    gpio_init(OTG_PORT, &gpio_init_struct);
 #endif
 
     /* Peripheral clock enable */
-    crm_periph_clock_enable(CRM_OTGFS1_PERIPH_CLOCK, TRUE);
+    crm_periph_clock_enable(OTG_PERIPH_CLOCK, TRUE);
     /* USB interrupt Init */
-    nvic_irq_enable(OTGFS1_IRQn, 0, 0);
-    // /* Peripheral clock enable */
-    // crm_periph_clock_enable(CRM_OTGFS2_PERIPH_CLOCK, TRUE);
-    // /* USB interrupt Init */
-    // nvic_irq_enable(OTGFS2_IRQn, 0, 0);
+    nvic_irq_enable(OTG_IRQ, 0, 0);
 }
 
 //--------------------------------------------------------------------+
@@ -86,7 +74,7 @@ __attribute__((weak)) void board_init(void) {
     board_timer_stop();
 
     crm_periph_clock_enable(CRM_GPIOA_PERIPH_CLOCK, TRUE);
-    // crm_periph_clock_enable(CRM_GPIOB_PERIPH_CLOCK, TRUE);
+    crm_periph_clock_enable(CRM_GPIOB_PERIPH_CLOCK, TRUE);
     // crm_periph_clock_enable(CRM_GPIOC_PERIPH_CLOCK, TRUE);
     // crm_periph_clock_enable(CRM_GPIOD_PERIPH_CLOCK, TRUE);
     // crm_periph_clock_enable(CRM_GPIOE_PERIPH_CLOCK, TRUE);
@@ -134,16 +122,15 @@ __attribute__((weak)) void board_app_jump(void) {
 #endif
 
     crm_periph_clock_enable(CRM_GPIOA_PERIPH_CLOCK, FALSE);
-    // crm_periph_clock_enable(CRM_GPIOB_PERIPH_CLOCK, FALSE);
+    crm_periph_clock_enable(CRM_GPIOB_PERIPH_CLOCK, FALSE);
     // crm_periph_clock_enable(CRM_GPIOC_PERIPH_CLOCK, FALSE);
-    crm_periph_clock_enable(CRM_GPIOD_PERIPH_CLOCK, FALSE);
+    // crm_periph_clock_enable(CRM_GPIOD_PERIPH_CLOCK, FALSE);
     // crm_periph_clock_enable(CRM_GPIOE_PERIPH_CLOCK, FALSE);
     // crm_periph_clock_enable(CRM_GPIOF_PERIPH_CLOCK, FALSE);
     // crm_periph_clock_enable(CRM_GPIOG_PERIPH_CLOCK, FALSE);
     // crm_periph_clock_enable(CRM_GPIOH_PERIPH_CLOCK, FALSE);
 
-    crm_periph_clock_enable(CRM_OTGFS1_PERIPH_CLOCK, FALSE);
-    // crm_periph_clock_enable(CRM_OTGFS2_PERIPH_CLOCK, FALSE);
+    crm_periph_clock_enable(OTG_PERIPH_CLOCK, FALSE);
     crm_reset();
 
     SysTick->CTRL = 0;

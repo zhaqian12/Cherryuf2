@@ -41,6 +41,35 @@ extern "C" {
 // Double Reset tap to enter DFU
 #define CHERRYUF2_DFU_DOUBLE_TAP 1
 
+// OTGFS Config
+#ifdef AT32_USE_OTGFS2
+#define OTG_PORT            GPIOB
+#define OTG_DM_PIN          GPIO_PINS_14
+#define OTG_DM_MUX_SOURCE   GPIO_PINS_SOURCE14
+#define OTG_DP_PIN          GPIO_PINS_15
+#define OTG_DP_MUX_SOURCE   GPIO_PINS_SOURCE15
+#define OTG_SOF_PORT        GPIOA
+#define OTG_SOF_PIN         GPIO_PINS_4
+#define OTG_SOF_MUX_SOURCE  GPIO_PINS_SOURCE4
+#define OTG_VBUS_PIN        GPIO_PINS_13
+#define OTG_VBUS_MUX_SOURCE GPIO_PINS_SOURCE13
+#define OTG_PERIPH_CLOCK    CRM_OTGFS2_PERIPH_CLOCK
+#define OTG_IRQ             OTGFS2_IRQn
+#else
+#define OTG_PORT            GPIOA
+#define OTG_DM_PIN          GPIO_PINS_11
+#define OTG_DM_MUX_SOURCE   GPIO_PINS_SOURCE11
+#define OTG_DP_PIN          GPIO_PINS_12
+#define OTG_DP_MUX_SOURCE   GPIO_PINS_SOURCE12
+#define OTG_SOF_PORT        GPIOA
+#define OTG_SOF_PIN         GPIO_PINS_8
+#define OTG_SOF_MUX_SOURCE  GPIO_PINS_SOURCE8
+#define OTG_VBUS_PIN        GPIO_PINS_9
+#define OTG_VBUS_MUX_SOURCE GPIO_PINS_SOURCE9
+#define OTG_PERIPH_CLOCK    CRM_OTGFS1_PERIPH_CLOCK
+#define OTG_IRQ             OTGFS1_IRQn
+#endif
+
 #ifdef __cplusplus
 }
 #endif

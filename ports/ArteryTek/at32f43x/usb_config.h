@@ -142,10 +142,13 @@
 /* ================ USB Device Port Configuration ================*/
 
 #define CONFIG_USB_DWC2_PORT FS_PORT
+#ifdef AT32_USE_OTGFS2
+#define USBD_IRQHandler OTGFS2_IRQHandler
+#define USB_BASE 0x40040000UL
+#else
 #define USBD_IRQHandler OTGFS1_IRQHandler
-// #define USBD_IRQHandler OTGFS2_IRQHandler
 #define USB_BASE 0x50000000UL
-// #define USB_BASE 0x40040000UL
+#endif
 #define USB_NUM_BIDIR_ENDPOINTS 8
 
 /* ================ USB Host Port Configuration ==================*/
