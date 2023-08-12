@@ -129,17 +129,13 @@ __attribute__((weak)) void board_app_jump(void) {
 
     // Disable all Interrupts
     NVIC->ICER[0] = 0xFFFFFFFF;
-    NVIC->ICER[1] = 0xFFFFFFFF;
-    NVIC->ICER[2] = 0xFFFFFFFF;
-    NVIC->ICER[3] = 0xFFFFFFFF;
 
     volatile uint32_t const *app_vector = (volatile uint32_t const *)BOARD_FLASH_APP_START;
 
     __set_MSP(app_vector[0]);
 
-    typedef void (*BootJump_t)(void);
-    BootJump_t boot_jump = *(BootJump_t *)(BOARD_FLASH_APP_START + 4);
-    boot_jump();
+    // Jump to Application Entry
+    asm("bx %0" ::"r"(app_vector[1]));
 }
 
 //--------------------------------------------------------------------+
