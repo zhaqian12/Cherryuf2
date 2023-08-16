@@ -24,6 +24,7 @@ It only supports DFU with MSC.
 | ArteryTek    | AT32F407    |              |
 | ArteryTek    | AT32F413    |              |
 | ArteryTek    | AT32F415    |              |
+| ArteryTek    | AT32F423    |              |
 | ArteryTek    | AT32F425    |              |
 | ArteryTek    | AT32F435    |              |
 | ArteryTek    | AT32F437    |              |
@@ -40,8 +41,17 @@ It only supports DFU with MSC.
 
 ## Todo List
 - [ ] AT32WB415
+- [ ] AT32F402
+- [ ] AT32F405
+- [ ] AT32F435/7(Multiport)
+- [ ] HPM5300
+- [ ] CH32V307 -> CH32V20X_30X
+- [ ] BL618
 - [ ] CH32F20X
 - [ ] CH32V20X
+- [ ] AG32VF103
+- [ ] STM32H7
+- [ ] MM32F327X
 - [ ] ...
 
 # How to build

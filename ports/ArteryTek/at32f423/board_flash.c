@@ -111,4 +111,3 @@ __attribute__((weak)) void board_self_update(const uint8_t *bootloader_bin, uint
     (void)bootloader_len;
 }
 #endif
-

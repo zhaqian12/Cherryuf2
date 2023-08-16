@@ -46,3 +46,12 @@
 [submodule "sdk/ST/stm32f4xx_library/cmsis_device_f4"]
 	path = sdk/ST/stm32f4xx_library/cmsis_device_f4
 	url = https://github.com/STMicroelectronics/cmsis_device_f4.git
+[submodule "sdk/ArteryTek/at32f425_library"]
+	path = sdk/ArteryTek/at32f425_library
+	url = https://github.com/ArteryTek/AT32F425_Firmware_Library.git
+[submodule "sdk/ArteryTek/at32f435_437_library"]
+	path = sdk/ArteryTek/at32f435_437_library
+	url = https://github.com/ArteryTek/AT32F435_437_Firmware_Library.git
+[submodule "sdk/ArteryTek/at32f423_library"]
+	path = sdk/ArteryTek/at32f423_library
+	url = https://github.com/ArteryTek/AT32F423_Firmware_Library.git
