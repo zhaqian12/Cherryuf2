@@ -39,6 +39,10 @@ extern "C" {
 #    define BOARD_FLASH_APP_START 0x08004000
 #endif
 
+#ifndef BOARD_SRAM_BASE_ADDR
+#    define BOARD_SRAM_BASE_ADDR 0x20000000
+#endif
+
 // Double Reset tap to enter DFU
 #define CHERRYUF2_DFU_DOUBLE_TAP 1
 

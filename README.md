@@ -28,7 +28,7 @@ It only supports DFU with MSC.
 | ArteryTek    | AT32F425    |              |
 | ArteryTek    | AT32F435    |              |
 | ArteryTek    | AT32F437    |              |
-| ST           | STM32F072   | Need to copy the vector table from the Flash to the base address of the SRAM at 0x20000000 in app           |
+| ST           | STM32F072   | Need to redirect vectors in app or bootloader.   |
 | ST           | STM32F103   |              |
 | ST           | STM32F401   |              |
 | ST           | STM32F407   |              |

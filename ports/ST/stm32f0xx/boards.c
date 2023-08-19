@@ -132,6 +132,11 @@ __attribute__((weak)) void board_app_jump(void) {
 
     volatile uint32_t const *app_vector = (volatile uint32_t const *)BOARD_FLASH_APP_START;
 
+#ifdef BOARD_VECTOR_REDIRECT_BOOTLOADER
+    memcpy((void*)BOARD_SRAM_BASE_ADDR, (void*)BOARD_FLASH_APP_START, 0xC0);
+    SYSCFG->CFGR1 |= SYSCFG_CFGR1_MEM_MODE;
+#endif
+
     __set_MSP(app_vector[0]);
 
     // Jump to Application Entry
