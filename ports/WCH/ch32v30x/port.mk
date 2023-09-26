@@ -43,7 +43,11 @@ INC += \
 	$(TOP)/$(WCH_DRIVERS)/inc
 
 # Port source for USB
-SRC_C += $(CHERRYUSB_DIR)/port/ch32/usb_dc_usbfs.c
+ifeq ($(strip $(USB_XFER_SPEED)), HS)
+	SRC_C += $(CHERRYUSB_DIR)/port/ch32/usb_dc_usbhs.c
+else
+	SRC_C += $(CHERRYUSB_DIR)/port/ch32/usb_dc_usbfs.c
+endif
 
 # Port include for USB port
 INC += $(TOP)/$(CHERRYUSB_DIR)/port/ch32

@@ -141,11 +141,16 @@
 
 /* ================ USB Device Port Configuration ================*/
 #ifdef CONFIG_USB_HS
-#define USBD_IRQHandler USBHS_IRQHandler
-#else
-#define USBD_IRQHandler OTG_FS_IRQHandler
-#endif
+#define CONFIG_USB_DWC2_PORT HS_PORT
+#define USBD_IRQHandler OTGHS_IRQHandler
+#define USB_BASE 0x40040000UL
 #define USB_NUM_BIDIR_ENDPOINTS 8
+#else
+#define CONFIG_USB_DWC2_PORT FS_PORT
+#define USBD_IRQHandler OTGFS1_IRQHandler
+#define USB_BASE 0x50000000UL
+#define USB_NUM_BIDIR_ENDPOINTS 8
+#endif
 
 /* ================ USB Host Port Configuration ==================*/
 

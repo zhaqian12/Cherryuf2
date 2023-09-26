@@ -72,6 +72,9 @@ INC += \
   $(TOP)/$(BOARD_DIR)
 
 #-------------- CherryUSB --------------
+VALID_USB_XFER_SPEED := FS HS
+USB_XFER_SPEED ?= FS
+
 CHERRYUSB_DIR = lib/CherryUSB
 
 SRC_C += \
