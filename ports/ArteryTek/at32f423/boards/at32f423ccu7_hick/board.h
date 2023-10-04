@@ -31,8 +31,8 @@
 //--------------------------------------------------------------------+
 // LED
 //--------------------------------------------------------------------+
-#define LED_PORT              GPIOA
-#define LED_PIN               GPIO_PINS_1
+#define LED_PORT              GPIOD
+#define LED_PIN               GPIO_PINS_13
 #define LED_STATE_ON          0
 
 //--------------------------------------------------------------------+
@@ -61,26 +61,13 @@
 //--------------------------------------------------------------------+
 static inline void clock_init(void) {
   crm_reset();
-  flash_psr_set(FLASH_WAIT_CYCLE_4);
+  flash_psr_set(FLASH_WAIT_CYCLE_1);
   crm_periph_clock_enable(CRM_PWC_PERIPH_CLOCK, TRUE);
-  pwc_ldo_output_voltage_set(PWC_LDO_OUTPUT_1V3);
-  crm_clock_source_enable(CRM_CLOCK_SOURCE_HICK, TRUE);
-  while(crm_flag_get(CRM_HICK_STABLE_FLAG) != SET)
-  {
-  }
-  crm_pll_config(CRM_PLL_SOURCE_HICK, 72, 1, CRM_PLL_FR_2);
-  crm_clock_source_enable(CRM_CLOCK_SOURCE_PLL, TRUE);
-  while(crm_flag_get(CRM_PLL_STABLE_FLAG) != SET)
-  {
-  }
+  pwc_ldo_output_voltage_set(PWC_LDO_OUTPUT_1V0);
   crm_ahb_div_set(CRM_AHB_DIV_1);
   crm_apb2_div_set(CRM_APB2_DIV_1);
-  crm_apb1_div_set(CRM_APB1_DIV_2);
-  crm_auto_step_mode_enable(TRUE);
-  crm_sysclk_switch(CRM_SCLK_PLL);
-  while(crm_sysclk_switch_status_get() != CRM_SCLK_PLL)
-  {
-  }
-  crm_auto_step_mode_enable(FALSE);
+  crm_apb1_div_set(CRM_APB1_DIV_1);
+  crm_usb_clock_div_set(CRM_USB_DIV_6);
+  crm_usb_clock_source_select(CRM_USB_CLOCK_SOURCE_HICK);
 }
 #endif

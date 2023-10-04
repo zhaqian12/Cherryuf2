@@ -35,7 +35,7 @@ __attribute__((weak)) void usb_dc_low_level_init(void) {
     crm_pllu_output_set(TRUE);
     while (crm_flag_get(CRM_PLLU_STABLE_FLAG) != SET) {
     }
-    (CRM_USB_CLOCK_SOURCE_PLLU);
+    crm_usb_clock_source_select(CRM_USB_CLOCK_SOURCE_PLLU);
     crm_periph_clock_enable(CRM_OTGFS1_PERIPH_CLOCK, TRUE);
     nvic_irq_enable(OTGFS1_IRQn, 0, 0);
 #endif
