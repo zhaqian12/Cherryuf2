@@ -67,7 +67,6 @@ static inline void clock_init(void) {
   crm_ahb_div_set(CRM_AHB_DIV_1);
   crm_apb2_div_set(CRM_APB2_DIV_1);
   crm_apb1_div_set(CRM_APB1_DIV_1);
-  crm_usb_clock_div_set(CRM_USB_DIV_6);
   crm_usb_clock_source_select(CRM_USB_CLOCK_SOURCE_HICK);
 }
 #endif
