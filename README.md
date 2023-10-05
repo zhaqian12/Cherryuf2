@@ -20,7 +20,9 @@ It only supports DFU with MSC.
 # Support Devices
 | Manufacturer | MCU         | Note         |
 | :----------  | :---------- | :----------  |
+| ArteryTek    | AT32F402    |              |
 | ArteryTek    | AT32F403A   |              |
+| ArteryTek    | AT32F405    |              |
 | ArteryTek    | AT32F407    |              |
 | ArteryTek    | AT32F413    |              |
 | ArteryTek    | AT32F415    |              |
@@ -28,8 +30,6 @@ It only supports DFU with MSC.
 | ArteryTek    | AT32F425    |              |
 | ArteryTek    | AT32F435    |              |
 | ArteryTek    | AT32F437    |              |
-| ArteryTek    | AT32F402    |              |
-| ArteryTek    | AT32F405    |              |
 | ST           | STM32F072   | Need to redirect vectors in app or bootloader.   |
 | ST           | STM32F103   |              |
 | ST           | STM32F401   |              |
@@ -43,8 +43,6 @@ It only supports DFU with MSC.
 
 ## Todo List
 - [ ] AT32WB415
-- [x] AT32F402
-- [x] AT32F405
 - [ ] AT32F435/7(Multiport)
 - [ ] HPM5300
 - [ ] CH32V307 -> CH32V20X_30X

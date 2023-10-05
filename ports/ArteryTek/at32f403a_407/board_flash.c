@@ -70,7 +70,6 @@ static bool flash_erase(uint32_t addr) {
 }
 
 static void flash_write(uint32_t dst, const uint8_t *src, int len) {
-    if (dst < BOARD_FLASH_APP_START || dst > )
     flash_erase(dst);
 
     for (int i = 0; i < len; i += 4) {
