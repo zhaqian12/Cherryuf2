@@ -22,7 +22,7 @@ It only supports DFU with MSC.
 | :----------  | :---------- | :----------  |
 | ArteryTek    | AT32F402    |              |
 | ArteryTek    | AT32F403A   |              |
-| ArteryTek    | AT32F405    |              |
+| ArteryTek    | AT32F405    | If you use hs embedded phy, change the init value of the GCCFG register in the CherryUSB port. |
 | ArteryTek    | AT32F407    |              |
 | ArteryTek    | AT32F413    |              |
 | ArteryTek    | AT32F415    |              |
