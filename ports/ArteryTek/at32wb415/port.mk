@@ -1,0 +1,43 @@
+UF2_FAMILY_ID ?= 0x6d37de77
+CROSS_COMPILE = arm-none-eabi-
+
+AT_DRIVERS = sdk/ArteryTek/at32wb415_library/libraries/drivers
+AT_CMSIS = sdk/ArteryTek/at32wb415_library/libraries/cmsis
+
+# Port Compiler Flags
+CFLAGS += \
+  -flto \
+  -mthumb \
+  -mabi=aapcs \
+  -mcpu=cortex-m4 \
+  -mfloat-abi=soft \
+  -nostdlib -nostartfiles
+
+# suppress warning caused by vendor mcu driver
+CFLAGS += -Wno-error=cast-align -Wno-error=unused-parameter 
+
+# default linker file
+LD_FILES ?= $(PORT_DIR)/ld/AT32WB415xC_FLASH.ld
+
+# Port source
+SRC_C += \
+	$(addprefix $(CURRENT_PATH)/, $(wildcard *.c)) \
+	$(AT_CMSIS)/cm4/device_support/system_at32wb415.c \
+	$(AT_DRIVERS)/src/at32wb415_crm.c\
+	$(AT_DRIVERS)/src/at32wb415_flash.c\
+	$(AT_DRIVERS)/src/at32wb415_gpio.c\
+	$(AT_DRIVERS)/src/at32wb415_misc.c
+
+# Port include
+INC += \
+	$(TOP)/$(AT_CMSIS)/cm4/core_support \
+	$(TOP)/$(AT_CMSIS)/cm4/device_support \
+	$(TOP)/$(AT_DRIVERS)/inc
+
+# Port source for USB
+SRC_C += $(CHERRYUSB_DIR)/port/dwc2/usb_dc_dwc2.c
+
+# Port include for USB port
+INC += $(TOP)/$(CHERRYUSB_DIR)/port/dwc2
+
+DEPFLAGS += -include $(TOP)/$(AT_CMSIS)/cm4/device_support/at32wb415.h

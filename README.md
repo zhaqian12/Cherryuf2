@@ -18,31 +18,32 @@ It only supports DFU with MSC.
 ```
 
 # Support Devices
-| Manufacturer | MCU         | Note         |
-| :----------  | :---------- | :----------  |
-| ArteryTek    | AT32F402    |              |
-| ArteryTek    | AT32F403A   |              |
-| ArteryTek    | AT32F405    | If you use hs embedded phy, change the init value of the GCCFG register in the CherryUSB port. |
-| ArteryTek    | AT32F407    |              |
-| ArteryTek    | AT32F413    |              |
-| ArteryTek    | AT32F415    |              |
-| ArteryTek    | AT32F423    |              |
-| ArteryTek    | AT32F425    |              |
-| ArteryTek    | AT32F435    |              |
-| ArteryTek    | AT32F437    |              |
-| ST           | STM32F072   | Need to redirect vectors in app or bootloader.   |
-| ST           | STM32F103   |              |
-| ST           | STM32F401   |              |
-| ST           | STM32F407   |              |
-| ST           | STM32F411   |              |
-| ST           | STM32G431   |              |
-| ST           | STM32L433   |              |
-| WCH          | CH32V307    |              |
-| WCH          | CH582M      |              |
-| HDSC         | HC32F460    | Some problems with usb.And need to config icg if you want to use it in app.             |
+| Manufacturer | MCU       | Note                                                                                           |
+| :----------- | :-------- | :--------------------------------------------------------------------------------------------- |
+| ArteryTek    | AT32F402  |                                                                                                |
+| ArteryTek    | AT32F403A |                                                                                                |
+| ArteryTek    | AT32F405  | If you use hs embedded phy, change the init value of the GCCFG register in the CherryUSB port. |
+| ArteryTek    | AT32F407  |                                                                                                |
+| ArteryTek    | AT32F413  |                                                                                                |
+| ArteryTek    | AT32F415  |                                                                                                |
+| ArteryTek    | AT32F423  |                                                                                                |
+| ArteryTek    | AT32F425  |                                                                                                |
+| ArteryTek    | AT32F435  |                                                                                                |
+| ArteryTek    | AT32F437  |                                                                                                |
+| ArteryTek    | AT32WB415 |                                                                                                |
+| ST           | STM32F072 | Need to redirect vectors in app or bootloader.                                                 |
+| ST           | STM32F103 |                                                                                                |
+| ST           | STM32F401 |                                                                                                |
+| ST           | STM32F407 |                                                                                                |
+| ST           | STM32F411 |                                                                                                |
+| ST           | STM32G431 |                                                                                                |
+| ST           | STM32L433 |                                                                                                |
+| WCH          | CH32V307  |                                                                                                |
+| WCH          | CH582M    |                                                                                                |
+| HDSC         | HC32F460  | Some problems with usb.And need to config icg if you want to use it in app.                    |
 
 ## Todo List
-- [ ] AT32WB415
+- [x] AT32WB415
 - [ ] AT32F435/7(Multiport)
 - [ ] HPM5300
 - [ ] CH32V307 -> CH32V20X_30X
