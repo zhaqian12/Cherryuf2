@@ -57,12 +57,12 @@ It only supports DFU with MSC.
 
 # How to build
 ```
-$ cd ports/ArtertTek/at32f413
+$ cd ports/ArteryTek/at32f413
 $ make BOARD=at32f413cbt7 all
 ```
 
 # How to clean
 ```
-$ cd ports/ArtertTek/at32f413
+$ cd ports/ArteryTek/at32f413
 $ make BOARD=at32f413cbt7 clean
 ```
