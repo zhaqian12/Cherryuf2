@@ -55,3 +55,9 @@
 [submodule "sdk/ArteryTek/at32f423_library"]
 	path = sdk/ArteryTek/at32f423_library
 	url = https://github.com/ArteryTek/AT32F423_Firmware_Library.git
+[submodule "sdk/ArteryTek/at32f402_405_library"]
+	path = sdk/ArteryTek/at32f402_405_library
+	url = https://github.com/ArteryTek/AT32F402_405_Firmware_Library.git
+[submodule "sdk/ArteryTek/at32wb415_library"]
+	path = sdk/ArteryTek/at32wb415_library
+	url = https://github.com/ArteryTek/AT32WB415_Firmware_Library.git
