@@ -39,10 +39,6 @@
 // ota0 partition size
 static uint32_t _flash_size;
 
-#define STR0(x) #x
-#define STR(x) STR0(x)
-
-#define UF2_ARRAY_SIZE(_arr) (sizeof(_arr) / sizeof(_arr[0]))
 #define UF2_DIV_CEIL(_v, _d) (((_v) / (_d)) + ((_v) % (_d) ? 1 : 0))
 
 typedef struct {
@@ -226,7 +222,6 @@ static uint32_t info_index_of(uint32_t cluster) {
 }
 
 void uf2_init(void) {
-    // TODO maybe limit to application size only if possible board_flash_app_size()
     _flash_size = board_flash_size();
 
     // update CURRENT.UF2 file size

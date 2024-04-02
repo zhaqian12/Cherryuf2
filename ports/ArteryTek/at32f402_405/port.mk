@@ -36,7 +36,9 @@ INC += \
 	$(TOP)/$(AT_DRIVERS)/inc
 
 # Port source for USB
-SRC_C += $(CHERRYUSB_DIR)/port/dwc2/usb_dc_dwc2.c
+SRC_C += \
+	$(CHERRYUSB_DIR)/port/dwc2/usb_dc_dwc2.c \
+	$(CHERRYUSB_DIR)/port/dwc2/usb_glue_at.c
 
 # Port include for USB port
 INC += $(TOP)/$(CHERRYUSB_DIR)/port/dwc2

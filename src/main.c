@@ -50,33 +50,25 @@ static void msc_task_process(void);
 int main(void) {
     board_init();
 
-#if CHERRYUF2_PROTECT_BOOTLOADER
-    board_flash_protect_bootloader(true);
-#endif
-
     // if not DFU mode, jump to App
     if (!check_dfu_mode()) {
         board_app_jump();
         while (1) {
         }
     }
-
+    
+    board_dfu_init();
     board_flash_init();
     uf2_init();
-    extern void msc_init(void);
-    msc_init();
+    board_msc_init();
 
     while (1) {
-        if (!usb_device_is_configured()) {
-            if (board_usb_process) board_usb_process();
-        }
         msc_task_process();
     }
 }
 
 // return true if start DFU mode, else App mode
 static bool check_dfu_mode(void) {
-    // TODO enable for all port instead of one with double tap
 #if CHERRYUF2_DFU_DOUBLE_TAP
     if (DBL_TAP_REG == DBL_TAP_MAGIC_ERASE_APP) {
         DBL_TAP_REG = 0;

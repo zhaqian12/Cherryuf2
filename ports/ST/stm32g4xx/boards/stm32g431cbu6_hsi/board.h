@@ -38,8 +38,8 @@
 //--------------------------------------------------------------------+
 // FLASH
 //--------------------------------------------------------------------+
-#define BOARD_SECTOR_SIZE   1024U
-#define BOARD_SECTOR_COUNT  128
+#define BOARD_SECTOR_SIZE   (2048)
+#define BOARD_SECTOR_COUNT  (64)
 #define BOARD_FLASH_SIZE    (BOARD_SECTOR_SIZE * BOARD_SECTOR_COUNT)
 
 //--------------------------------------------------------------------+

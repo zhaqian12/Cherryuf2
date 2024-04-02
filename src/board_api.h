@@ -29,6 +29,7 @@
 #include <stdint.h>
 #include <string.h>
 #include "boards.h"
+#include "msc_desc.h"
 
 //--------------------------------------------------------------------+
 // Features
@@ -57,22 +58,25 @@
 // Constant
 //--------------------------------------------------------------------+
 
-#define DBL_TAP_MAGIC 0xf01669ef            // Enter DFU magic
-#define DBL_TAP_MAGIC_QUICK_BOOT 0xf02669ef // Skip double tap delay detection
-#define DBL_TAP_MAGIC_ERASE_APP 0xf5e80ab4  // Erase entire application !!
+#define DBL_TAP_MAGIC            0xf01669ef  // Enter DFU magic
+#define DBL_TAP_MAGIC_QUICK_BOOT 0xf02669ef  // Skip double tap delay detection
+#define DBL_TAP_MAGIC_ERASE_APP  0xf5e80ab4  // Erase entire application !!
+
+//--------------------------------------------------------------------+
+// Utils
+//--------------------------------------------------------------------+
+
+#define BOARD_ARRAY_SIZE(array) ((int)((sizeof(array) / sizeof((array)[0]))))
 
 //--------------------------------------------------------------------+
 // Basic API
 //--------------------------------------------------------------------+
 
-// Baudrate for UART if used
-#define BOARD_UART_BAUDRATE 115200
+void board_init(void); // clk init
 
-void board_init(void);
+void board_dfu_init(void); // usb and other peripherals init
 
 void board_led_write(uint32_t value);
-
-int board_uart_write(void const* buf, int len);
 
 void board_timer_start(uint32_t ms);
 
@@ -86,7 +90,7 @@ void board_app_jump(void);
 
 void board_dfu_complete(void);
 
-void board_usb_process(void);
+void board_msc_init(void);
 
 //--------------------------------------------------------------------+
 // Flash API
@@ -103,9 +107,5 @@ void board_flash_write(uint32_t addr, void const* data, uint32_t len);
 void board_flash_flush(void);
 
 void board_flash_erase_app(void);
-
-bool board_flash_protect_bootloader(bool protect);
-
-void board_self_update(const uint8_t* bootloader_bin, uint32_t bootloader_len);
 
 #endif

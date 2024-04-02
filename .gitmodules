@@ -1,6 +1,3 @@
-[submodule "lib/CherryUSB"]
-	path = lib/CherryUSB
-	url = https://github.com/zhaqian12/CherryUSB
 [submodule "lib/uf2"]
 	path = lib/uf2
 	url = https://github.com/microsoft/uf2.git
@@ -61,3 +58,6 @@
 [submodule "sdk/ArteryTek/at32wb415_library"]
 	path = sdk/ArteryTek/at32wb415_library
 	url = https://github.com/ArteryTek/AT32WB415_Firmware_Library.git
+[submodule "lib/CherryUSB"]
+	path = lib/CherryUSB
+	url = https://github.com/cherry-embedded/CherryUSB.git

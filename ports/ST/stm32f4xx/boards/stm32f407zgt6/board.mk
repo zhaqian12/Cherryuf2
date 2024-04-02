@@ -7,8 +7,3 @@ SRC_S += \
 
 LD_FILES = $(PORT_DIR)/ld/STM32F407XG_FLASH.ld
 
-# For flash-jlink target
-JLINK_DEVICE = stm32f407zg
-
-flash: flash-jlink
-erase: erase-jlink

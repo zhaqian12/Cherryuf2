@@ -25,34 +25,15 @@
 #include "board_api.h"
 
 //--------------------------------------------------------------------+
-// CherryUSB LLD
-//--------------------------------------------------------------------+
-__attribute__((weak)) void usb_dc_low_level_init(void) {
-    HAL_PWREx_EnableVddUSB();
-    GPIO_InitTypeDef GPIO_InitStruct = {0};
-    GPIO_InitStruct.Pin              = (GPIO_PIN_11 | GPIO_PIN_12);
-    GPIO_InitStruct.Mode             = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull             = GPIO_NOPULL;
-    GPIO_InitStruct.Speed            = GPIO_SPEED_HIGH;
-    GPIO_InitStruct.Alternate        = GPIO_AF10_USB_FS;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-    /* Peripheral clock enable */
-    __HAL_RCC_USB_CLK_ENABLE();
-    /* USB interrupt Init */
-    HAL_NVIC_SetPriority(USB_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(USB_IRQn);
-}
-
-//--------------------------------------------------------------------+
 // Boards api
 //--------------------------------------------------------------------+
 __attribute__((weak)) void board_init(void) {
     clock_init();
     SystemCoreClockUpdate();
-
     board_timer_stop();
+}
 
+__attribute__((weak)) void board_dfu_init(void) {
     __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
     __HAL_RCC_GPIOC_CLK_ENABLE();
@@ -89,10 +70,6 @@ __attribute__((weak)) void board_dfu_complete(void) {
     NVIC_SystemReset();
 }
 
-__attribute__((weak)) void board_usb_process(void) {
-    // todo
-}
-
 __attribute__((weak)) bool board_app_valid(void) {
     volatile uint32_t const *app_vector = (volatile uint32_t const *)BOARD_FLASH_APP_START;
 
@@ -105,30 +82,6 @@ __attribute__((weak)) bool board_app_valid(void) {
 }
 
 __attribute__((weak)) void board_app_jump(void) {
-#ifdef LED_PIN
-    HAL_GPIO_DeInit(LED_PORT, LED_PIN);
-#endif
-
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_11 | GPIO_PIN_12);
-
-    __HAL_RCC_GPIOA_CLK_DISABLE();
-    __HAL_RCC_GPIOB_CLK_DISABLE();
-    __HAL_RCC_GPIOC_CLK_DISABLE();
-#ifdef GPIOD
-    __HAL_RCC_GPIOD_CLK_DISABLE();
-#endif
-#ifdef GPIOE
-    __HAL_RCC_GPIOE_CLK_DISABLE();
-#endif
-#ifdef GPIOF
-    __HAL_RCC_GPIOF_CLK_DISABLE();
-#endif
-#ifdef GPIOG
-    __HAL_RCC_GPIOG_CLK_DISABLE();
-#endif
-    __HAL_RCC_GPIOH_CLK_DISABLE();
-    __HAL_RCC_USB_CLK_DISABLE();
-
     HAL_RCC_DeInit();
     HAL_DeInit();
 
@@ -137,20 +90,18 @@ __attribute__((weak)) void board_app_jump(void) {
     SysTick->VAL  = 0;
 
     // Disable all Interrupts
-    NVIC->ICER[0] = 0xFFFFFFFF;
-    NVIC->ICER[1] = 0xFFFFFFFF;
-    NVIC->ICER[2] = 0xFFFFFFFF;
-    NVIC->ICER[3] = 0xFFFFFFFF;
+    for (int i = 0; i < BOARD_ARRAY_SIZE(NVIC->ICER); i++) {
+        NVIC->ICER[i] = 0xFFFFFFFF;
+        NVIC->ICPR[i] = 0xFFFFFFFF;
+    }
 
     volatile uint32_t const *app_vector = (volatile uint32_t const *)BOARD_FLASH_APP_START;
 
     /* switch exception handlers to the application */
     SCB->VTOR = (uint32_t)BOARD_FLASH_APP_START;
 
-    // Set stack pointer
+    __set_CONTROL(0);
     __set_MSP(app_vector[0]);
-
-    // Jump to Application Entry
     asm("bx %0" ::"r"(app_vector[1]));
 }
 
@@ -177,12 +128,6 @@ void board_timer_stop(void) {
 
 void SysTick_Handler(void) {
     board_timer_handler();
-}
-
-int board_uart_write(void const *buf, int len) {
-    (void)buf;
-    (void)len;
-    return 0;
 }
 
 void _init(void) {}

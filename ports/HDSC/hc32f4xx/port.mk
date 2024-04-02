@@ -46,7 +46,10 @@ INC += \
 	$(TOP)/lib/SEGGER_RTT/RTT
 
 # Port source for USB
-SRC_C += $(CHERRYUSB_DIR)/port/dwc2/usb_dc_dwc2.c
+SRC_C += \
+	$(CHERRYUSB_DIR)/port/dwc2/usb_dc_dwc2.c \
+	$(CHERRYUSB_DIR)/port/dwc2/usb_glue_st.c
+
 
 # Port include for USB port
 INC += $(TOP)/$(CHERRYUSB_DIR)/port/dwc2

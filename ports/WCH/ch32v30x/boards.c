@@ -25,37 +25,16 @@
 #include "board_api.h"
 
 //--------------------------------------------------------------------+
-// CherryUSB LLD
-//--------------------------------------------------------------------+
-__attribute__((weak)) void usb_dc_low_level_init(void) {
-    RCC_USBCLK48MConfig(RCC_USBCLK48MCLKSource_USBPHY);
-    RCC_USBHSPLLCLKConfig(RCC_HSBHSPLLCLKSource_HSE);
-    RCC_USBHSConfig(RCC_USBPLL_Div2);
-    RCC_USBHSPLLCKREFCLKConfig(RCC_USBHSPLLCKREFCLK_4M);
-    RCC_USBHSPHYPLLALIVEcmd(ENABLE);
-#ifdef CONFIG_USB_HS
-    RCC_AHBPeriphClockCmd(RCC_AHBPeriph_USBHS, ENABLE);
-    NVIC_EnableIRQ(USBHS_IRQn);
-#else
-    // EXTEN->EXTEN_CTR |= EXTEN_USBD_PU_EN;
-    NVIC_EnableIRQ(OTG_FS_IRQn);
-    RCC_AHBPeriphClockCmd(RCC_AHBPeriph_OTG_FS, ENABLE);
-#endif
-
-    Delay_Us(100);
-}
-
-//--------------------------------------------------------------------+
 // Boards api
 //--------------------------------------------------------------------+
 __attribute__((weak)) void board_init(void) {
     Delay_Init();
-
     clock_init();
     SystemCoreClockUpdate();
-
     board_timer_stop();
+}
 
+__attribute__((weak)) void board_dfu_init(void) {
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
@@ -76,10 +55,6 @@ __attribute__((weak)) void board_dfu_complete(void) {
     NVIC_SystemReset();
 }
 
-__attribute__((weak)) void board_usb_process(void) {
-    // todo
-}
-
 __attribute__((weak)) bool board_app_valid(void) {
     // need to improve
     const uint32_t val = *(volatile uint32_t const *)BOARD_FLASH_APP_START;
@@ -88,22 +63,6 @@ __attribute__((weak)) bool board_app_valid(void) {
 }
 
 __attribute__((weak)) void board_app_jump(void) {
-#ifdef LED_PIN
-    GPIO_DeInit(LED_PORT);
-#endif
-
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, DISABLE);
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, DISABLE);
-    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, DISABLE);
-    RCC_USBHSPHYPLLALIVEcmd(DISABLE);
-#ifdef CONFIG_USB_HS
-    RCC_AHBPeriphClockCmd(RCC_AHBPeriph_USBHS, DISABLE);
-    NVIC_DisableIRQ(USBHS_IRQn);
-#else
-    RCC_AHBPeriphClockCmd(RCC_AHBPeriph_OTG_FS, DISABLE);
-    NVIC_DisableIRQ(OTG_FS_IRQn);
-#endif
-
     NVIC_DisableIRQ(SysTicK_IRQn);
     SysTick->CTLR = 0;
     SysTick->SR   = 0;
@@ -148,12 +107,6 @@ void SysTick_Handler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
 void SysTick_Handler(void) {
     SysTick->SR = 0;
     board_timer_handler();
-}
-
-int board_uart_write(void const *buf, int len) {
-    (void)buf;
-    (void)len;
-    return 0;
 }
 
 void _init(void) {}

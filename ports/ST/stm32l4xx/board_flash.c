@@ -56,7 +56,7 @@ static bool flash_erase(uint32_t addr) {
         if (sector_addr + size > addr) {
             sector            = i;
             erased            = erased_sectors[i];
-            erased_sectors[i] = 1; // don't erase anymore - we will continue writing here!
+            erased_sectors[i] = 1;
             break;
         }
         sector_addr += size;
@@ -64,7 +64,7 @@ static bool flash_erase(uint32_t addr) {
 
     if (!erased && !is_blank(sector_addr, size)) {
         FLASH_EraseInitTypeDef EraseInitStruct = {0};
-        EraseInitStruct.TypeErase              = TYPEERASE_PAGES;
+        EraseInitStruct.TypeErase              = FLASH_TYPEERASE_PAGES;
         EraseInitStruct.Banks                  = FLASH_BANK_1;
         EraseInitStruct.Page                   = sector;
         EraseInitStruct.NbPages                = 1;
@@ -99,7 +99,9 @@ static void flash_write(uint32_t dst, const uint8_t *src, int len) {
 //--------------------------------------------------------------------+
 //
 //--------------------------------------------------------------------+
-__attribute__((weak)) void board_flash_init(void) {}
+__attribute__((weak)) void board_flash_init(void) {
+    __HAL_RCC_FLASH_CLK_ENABLE();
+}
 
 __attribute__((weak)) uint32_t board_flash_size(void) {
     return BOARD_FLASH_SIZE;
@@ -118,10 +120,3 @@ __attribute__((weak)) void board_flash_write(uint32_t addr, void const *data, ui
 }
 
 __attribute__((weak)) void board_flash_erase_app(void) {}
-
-#ifdef CHERRYUF2_SELF_UPDATE
-void board_self_update(const uint8_t *bootloader_bin, uint32_t bootloader_len) {
-    (void)bootloader_bin;
-    (void)bootloader_len;
-}
-#endif
