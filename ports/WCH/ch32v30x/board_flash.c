@@ -100,9 +100,15 @@ __attribute__((weak)) void board_flash_flush(void) {}
 
 __attribute__((weak)) void board_flash_write(uint32_t addr, void const *data, uint32_t len) {
     uint32_t flash_addr = FLASH_BASE_ADDR + addr;
-    FLASH_Unlock();
-    flash_write(flash_addr, data, len);
-    FLASH_Lock();
+    if (len == 256) {
+        FLASH_Unlock_Fast();
+        FLASH_ProgramPage_Fast(flash_addr, data);
+        FLASH_Lock_Fast();
+    } else {
+        FLASH_Unlock();
+        flash_write(flash_addr, data, len);
+        FLASH_Lock();
+    }
 }
 
 __attribute__((weak)) void board_flash_erase_app(void) {}
