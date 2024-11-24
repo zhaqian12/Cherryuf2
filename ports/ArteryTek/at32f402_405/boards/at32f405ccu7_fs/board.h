@@ -31,27 +31,29 @@
 //--------------------------------------------------------------------+
 // LED
 //--------------------------------------------------------------------+
-#define LED_PORT                    GPIOA
-#define LED_PIN                     GPIO_PINS_8
-#define LED_STATE_ON                0
+#define LED_PORT                        GPIOA
+#define LED_PIN                         GPIO_PINS_8
+#define LED_STATE_ON                    0
 
 //--------------------------------------------------------------------+
 // FLASH 
 //--------------------------------------------------------------------+
-#define BOARD_SECTOR_SIZE           2048U
-#define BOARD_SECTOR_COUNT          128
-#define BOARD_FLASH_SIZE            (BOARD_SECTOR_SIZE * BOARD_SECTOR_COUNT)
+#define BOARD_SECTOR_SIZE               2048U
+#define BOARD_SECTOR_COUNT              128
+#define BOARD_FLASH_SIZE                (BOARD_SECTOR_SIZE * BOARD_SECTOR_COUNT)
+
+#define CONFIG_BOOTUF2_APP_START_ADDR   0x08004000
 
 //--------------------------------------------------------------------+
 // USB UF2 
 //--------------------------------------------------------------------+
-#define USBD_VID                    0x00AA
-#define USBD_PID                    0xAAFF
+#define USBD_VID                        0x00AA
+#define USBD_PID                        0xAAFF
 
-#define CONFIG_PRODUCT              "ArteryTek AT32F405"
-#define CONFIG_BOARD                "AT32F405xC FS"
-#define CONFIG_BOOTUF2_INDEX_URL    "https://www.arterytek.com/cn/product/AT32F405.jsp"
-#define CONFIG_BOOTUF2_VOLUME_LABEL "CherryUF2"
+#define CONFIG_PRODUCT                  "ArteryTek AT32F405"
+#define CONFIG_BOARD                    "AT32F405xC FS"
+#define CONFIG_BOOTUF2_INDEX_URL        "https://www.arterytek.com/cn/product/AT32F405.jsp"
+#define CONFIG_BOOTUF2_VOLUME_LABEL     "CherryUF2"
 
 // clang-format on
 //--------------------------------------------------------------------+

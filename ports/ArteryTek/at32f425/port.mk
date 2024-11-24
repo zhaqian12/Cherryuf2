@@ -1,8 +1,8 @@
 UF2_FAMILY_ID ?= 0x5a5337d5
 CROSS_COMPILE = arm-none-eabi-
 
-AT_DRIVERS ?= sdk/ArteryTek/at32f425_library/libraries/drivers
-AT_CMSIS ?= sdk/ArteryTek/at32f425_library/libraries/cmsis
+AT_DRIVERS ?= sdk/ArteryTek/at32f425_library/drivers
+AT_CMSIS ?= sdk/ArteryTek/at32f425_library/cmsis
 
 # Port Compiler Flags
 CFLAGS += \

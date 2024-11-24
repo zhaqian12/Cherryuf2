@@ -35,7 +35,7 @@ extern "C" {
 
 // Flash Start Address of Application
 #ifndef CONFIG_BOOTUF2_APP_START_ADDR
-#    define CONFIG_BOOTUF2_APP_START_ADDR 0x08003000
+#    define CONFIG_BOOTUF2_APP_START_ADDR 0x08004000
 #endif
 
 #ifndef CONFIG_BOOTUF2_APP_END_ADDR
