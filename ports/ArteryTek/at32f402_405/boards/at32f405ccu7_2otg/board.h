@@ -32,7 +32,7 @@
 // LED
 //--------------------------------------------------------------------+
 #define LED_PORT                    GPIOA
-#define LED_PIN                     GPIO_PINS_8
+#define LED_PIN                     GPIO_PINS_0
 #define LED_STATE_ON                0
 
 //--------------------------------------------------------------------+
@@ -49,7 +49,7 @@
 #define USBD_PID                    0xAAFF
 
 #define CONFIG_PRODUCT              "ArteryTek AT32F405"
-#define CONFIG_BOARD                "AT32F405xC HS"
+#define CONFIG_BOARD                "AT32F405xC 2OTG"
 #define CONFIG_BOOTUF2_INDEX_URL    "https://www.arterytek.com/cn/product/AT32F405.jsp"
 #define CONFIG_BOOTUF2_VOLUME_LABEL "CherryUF2"
 

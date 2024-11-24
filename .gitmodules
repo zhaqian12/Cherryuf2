@@ -1,63 +1,64 @@
+[submodule "lib/CherryUSB"]
+	path = lib/CherryUSB
+	url = https://github.com/zhaqian12/CherryUSB.git
+	branch = MultiPortDwc2
 [submodule "lib/uf2"]
 	path = lib/uf2
 	url = https://github.com/microsoft/uf2.git
+[submodule "sdk/ArteryTek/at32f402_405_library"]
+	path = sdk/ArteryTek/at32f402_405_library
+	url = https://github.com/ArteryTek/AT32F402_405_Firmware_Library.git
+[submodule "sdk/ArteryTek/at32f403a_407_library"]
+	path = sdk/ArteryTek/at32f403a_407_library
+	url = https://github.com/ArteryTek/AT32F403A_407_Firmware_Library.git
 [submodule "sdk/ArteryTek/at32f413_library"]
 	path = sdk/ArteryTek/at32f413_library
 	url = https://github.com/ArteryTek/AT32F413_Firmware_Library.git
 [submodule "sdk/ArteryTek/at32f415_library"]
 	path = sdk/ArteryTek/at32f415_library
 	url = https://github.com/ArteryTek/AT32F415_Firmware_Library.git
-[submodule "sdk/ArteryTek/at32f403a_407_library"]
-	path = sdk/ArteryTek/at32f403a_407_library
-	url = https://github.com/ArteryTek/AT32F403A_407_Firmware_Library.git
-[submodule "sdk/ST/stm32f1xx_library/stm32f1xx_hal_driver"]
-	path = sdk/ST/stm32f1xx_library/stm32f1xx_hal_driver
-	url = https://github.com/STMicroelectronics/stm32f1xx_hal_driver.git
-[submodule "sdk/ST/stm32f1xx_library/cmsis_device_f1"]
-	path = sdk/ST/stm32f1xx_library/cmsis_device_f1
-	url = https://github.com/STMicroelectronics/cmsis_device_f1.git
-[submodule "sdk/CMSIS_5"]
-	path = sdk/CMSIS_5
-	url = https://github.com/ARM-software/CMSIS_5.git
-[submodule "sdk/ST/stm32g4xx_library/stm32g4xx_hal_driver"]
-	path = sdk/ST/stm32g4xx_library/stm32g4xx_hal_driver
-	url = https://github.com/STMicroelectronics/stm32g4xx_hal_driver.git
-[submodule "sdk/ST/stm32g4xx_library/cmsis_device_g4"]
-	path = sdk/ST/stm32g4xx_library/cmsis_device_g4
-	url = https://github.com/STMicroelectronics/cmsis_device_g4.git
-[submodule "sdk/ST/stm32l4xx_library/stm32l4xx_hal_driver"]
-	path = sdk/ST/stm32l4xx_library/stm32l4xx_hal_driver
-	url = https://github.com/STMicroelectronics/stm32l4xx_hal_driver.git
-[submodule "sdk/ST/stm32l4xx_library/cmsis_device_l4"]
-	path = sdk/ST/stm32l4xx_library/cmsis_device_l4
-	url = https://github.com/STMicroelectronics/cmsis_device_l4.git
-[submodule "sdk/ST/stm32f0xx_library/stm32f0xx_hal_driver"]
-	path = sdk/ST/stm32f0xx_library/stm32f0xx_hal_driver
-	url = https://github.com/STMicroelectronics/stm32f0xx_hal_driver.git
-[submodule "sdk/ST/stm32f0xx_library/cmsis_device_f0"]
-	path = sdk/ST/stm32f0xx_library/cmsis_device_f0
-	url = https://github.com/STMicroelectronics/cmsis_device_f0.git
-[submodule "sdk/ST/stm32f4xx_library/stm32f4xx_hal_driver"]
-	path = sdk/ST/stm32f4xx_library/stm32f4xx_hal_driver
-	url = https://github.com/STMicroelectronics/stm32f4xx_hal_driver.git
-[submodule "sdk/ST/stm32f4xx_library/cmsis_device_f4"]
-	path = sdk/ST/stm32f4xx_library/cmsis_device_f4
-	url = https://github.com/STMicroelectronics/cmsis_device_f4.git
+[submodule "sdk/ArteryTek/at32f423_library"]
+	path = sdk/ArteryTek/at32f423_library
+	url = https://github.com/ArteryTek/AT32F423_Firmware_Library.git
 [submodule "sdk/ArteryTek/at32f425_library"]
 	path = sdk/ArteryTek/at32f425_library
 	url = https://github.com/ArteryTek/AT32F425_Firmware_Library.git
 [submodule "sdk/ArteryTek/at32f435_437_library"]
 	path = sdk/ArteryTek/at32f435_437_library
 	url = https://github.com/ArteryTek/AT32F435_437_Firmware_Library.git
-[submodule "sdk/ArteryTek/at32f423_library"]
-	path = sdk/ArteryTek/at32f423_library
-	url = https://github.com/ArteryTek/AT32F423_Firmware_Library.git
-[submodule "sdk/ArteryTek/at32f402_405_library"]
-	path = sdk/ArteryTek/at32f402_405_library
-	url = https://github.com/ArteryTek/AT32F402_405_Firmware_Library.git
 [submodule "sdk/ArteryTek/at32wb415_library"]
 	path = sdk/ArteryTek/at32wb415_library
 	url = https://github.com/ArteryTek/AT32WB415_Firmware_Library.git
-[submodule "lib/CherryUSB"]
-	path = lib/CherryUSB
-	url = https://github.com/cherry-embedded/CherryUSB.git
+[submodule "sdk/CMSIS_5"]
+	path = sdk/CMSIS_5
+	url = https://github.com/ARM-software/CMSIS_5.git
+[submodule "sdk/ST/stm32f0xx_library/cmsis_device_f0"]
+	path = sdk/ST/stm32f0xx_library/cmsis_device_f0
+	url = https://github.com/STMicroelectronics/cmsis_device_f0.git
+[submodule "sdk/ST/stm32f0xx_library/stm32f0xx_hal_driver"]
+	path = sdk/ST/stm32f0xx_library/stm32f0xx_hal_driver
+	url = https://github.com/STMicroelectronics/stm32f0xx_hal_driver.git
+[submodule "sdk/ST/stm32f1xx_library/cmsis_device_f1"]
+	path = sdk/ST/stm32f1xx_library/cmsis_device_f1
+	url = https://github.com/STMicroelectronics/cmsis_device_f1.git
+[submodule "sdk/ST/stm32f1xx_library/stm32f1xx_hal_driver"]
+	path = sdk/ST/stm32f1xx_library/stm32f1xx_hal_driver
+	url = https://github.com/STMicroelectronics/stm32f1xx_hal_driver.git
+[submodule "sdk/ST/stm32f4xx_library/cmsis_device_f4"]
+	path = sdk/ST/stm32f4xx_library/cmsis_device_f4
+	url = https://github.com/STMicroelectronics/cmsis_device_f4.git
+[submodule "sdk/ST/stm32f4xx_library/stm32f4xx_hal_driver"]
+	path = sdk/ST/stm32f4xx_library/stm32f4xx_hal_driver
+	url = https://github.com/STMicroelectronics/stm32f4xx_hal_driver.git
+[submodule "sdk/ST/stm32g4xx_library/cmsis_device_g4"]
+	path = sdk/ST/stm32g4xx_library/cmsis_device_g4
+	url = https://github.com/STMicroelectronics/cmsis_device_g4.git
+[submodule "sdk/ST/stm32g4xx_library/stm32g4xx_hal_driver"]
+	path = sdk/ST/stm32g4xx_library/stm32g4xx_hal_driver
+	url = https://github.com/STMicroelectronics/stm32g4xx_hal_driver.git
+[submodule "sdk/ST/stm32l4xx_library/cmsis_device_l4"]
+	path = sdk/ST/stm32l4xx_library/cmsis_device_l4
+	url = https://github.com/STMicroelectronics/cmsis_device_l4.git
+[submodule "sdk/ST/stm32l4xx_library/stm32l4xx_hal_driver"]
+	path = sdk/ST/stm32l4xx_library/stm32l4xx_hal_driver
+	url = https://github.com/STMicroelectronics/stm32l4xx_hal_driver.git

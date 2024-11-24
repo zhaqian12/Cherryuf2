@@ -27,50 +27,72 @@
 //--------------------------------------------------------------------+
 // CherryUSB LLD
 //--------------------------------------------------------------------+
-extern const uint8_t msc_descriptor[];
-
 static struct usbd_interface intf0;
+static struct usbd_interface intf1;
 
-void board_msc_init(void) {
-    usbd_desc_register(0, msc_descriptor);
-    usbd_add_interface(0, usbd_msc_init_intf(0, &intf0, MSC_OUT_EP, MSC_IN_EP));
-
-#ifdef CONFIG_USB_HS
-    usbd_initialize(0, OTGHS_BASE, usbd_event_handler);
-#else
-    usbd_initialize(0, OTGFS1_BASE, usbd_event_handler);
+__attribute__((weak)) void board_uf2boot_init(void) {
+#if (defined(USB_XFER_USE_FS) || defined(USB_XFER_USE_FS_HS))
+    usbd_desc_register(BOOTUF2_BUS_ID_FS, &bootuf2_descriptor);
+    usbd_add_interface(BOOTUF2_BUS_ID_FS, usbd_msc_init_intf(BOOTUF2_BUS_ID_FS, &intf0, BOOTUF2_OUT_EP, BOOTUF2_IN_EP));
+    usbd_initialize(BOOTUF2_BUS_ID_FS, USB_DEVICE_SPEED_FS, OTGFS1_BASE, usbd_event_handler);
+#endif
+#if (defined(USB_XFER_USE_HS) || defined(USB_XFER_USE_FS_HS))
+    usbd_desc_register(BOOTUF2_BUS_ID_HS, &bootuf2_descriptor);
+    usbd_add_interface(BOOTUF2_BUS_ID_HS, usbd_msc_init_intf(BOOTUF2_BUS_ID_HS, &intf1, BOOTUF2_OUT_EP, BOOTUF2_IN_EP));
+    usbd_initialize(BOOTUF2_BUS_ID_HS, USB_DEVICE_SPEED_HS, OTGHS_BASE, usbd_event_handler);
 #endif
 }
 
-__attribute__((weak)) void usb_dc_low_level_init(void) {
-#ifdef CONFIG_USB_HS
-    crm_periph_clock_enable(CRM_OTGHS_PERIPH_CLOCK, TRUE);
-    nvic_irq_enable(OTGHS_IRQn, 0, 0);
-#else
-    crm_pllu_output_set(TRUE);
-    while (crm_flag_get(CRM_PLLU_STABLE_FLAG) != SET) {
+__attribute__((weak)) void usb_dc_low_level_init(uint8_t busid) {
+    if (busid == BOOTUF2_BUS_ID_FS) {
+        crm_pllu_output_set(TRUE);
+        while (crm_flag_get(CRM_PLLU_STABLE_FLAG) != SET) {
+        }
+        crm_usb_clock_source_select(CRM_USB_CLOCK_SOURCE_PLLU);
+        crm_periph_clock_enable(CRM_OTGFS1_PERIPH_CLOCK, TRUE);
+        nvic_irq_enable(OTGFS1_IRQn, 0, 0);
+    } else {
+        crm_periph_clock_enable(CRM_OTGHS_PERIPH_CLOCK, TRUE);
+        nvic_irq_enable(OTGHS_IRQn, 0, 0);
     }
-    crm_usb_clock_source_select(CRM_USB_CLOCK_SOURCE_PLLU);
-    crm_periph_clock_enable(CRM_OTGFS1_PERIPH_CLOCK, TRUE);
-    nvic_irq_enable(OTGFS1_IRQn, 0, 0);
-#endif
 }
 
 //--------------------------------------------------------------------+
 // IRQ Handler
 //--------------------------------------------------------------------+
-#ifdef CONFIG_USB_HS
-void OTGHS_IRQHandler(void) {
-    extern void USBD_IRQHandler(uint8_t busid);
-    USBD_IRQHandler(0);
-}
-#else
 void OTGFS1_IRQHandler(void) {
     extern void USBD_IRQHandler(uint8_t busid);
-    USBD_IRQHandler(0);
+    USBD_IRQHandler(BOOTUF2_BUS_ID_FS);
 }
-#endif
 
+void OTGHS_IRQHandler(void) {
+    extern void USBD_IRQHandler(uint8_t busid);
+    USBD_IRQHandler(BOOTUF2_BUS_ID_HS);
+}
 
+//--------------------------------------------------------------------+
+// dwc2 fifo configuration
+//--------------------------------------------------------------------+
+static const uint16_t usbd_dwc2_rxfifo_size[2] = {
+    128, // OTGFS1
+    256, // OTGHS
+};
 
+static const uint16_t usbd_dwc2_txfifo_size[2][8] = {
+    {24, 20, 20, 20, 20, 20, 0, 0},  // OTGFS1
+    {64, 256, 64, 64, 64, 64, 0, 0}, // OTGHS
+};
 
+uint16_t usbd_get_dwc2_rxfifo_conf(uint8_t busid) {
+    if (busid == BOOTUF2_BUS_ID_FS)
+        return usbd_dwc2_rxfifo_size[0];
+    else
+        return usbd_dwc2_rxfifo_size[1];
+}
+
+uint16_t usbd_get_dwc2_txfifo_conf(uint8_t busid, uint8_t fifoid) {
+    if (busid == BOOTUF2_BUS_ID_FS)
+        return usbd_dwc2_txfifo_size[0][fifoid];
+    else
+        return usbd_dwc2_txfifo_size[1][fifoid];
+}

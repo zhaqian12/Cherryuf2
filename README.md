@@ -68,3 +68,4 @@ $ make BOARD=at32f413cbt7 clean
 
 # Changelog
 - 2024.4 Update to the latest CherryUSB v1.2.0.
+- 2024.11 Update to the latest CherryUSB and bootuf2.

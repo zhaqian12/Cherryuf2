@@ -2,6 +2,7 @@
  * The MIT License (MIT)
  *
  * Copyright (c) 2018 Ha Thach for Adafruit Industries
+ *               2024 Zhaqian
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,36 +23,19 @@
  * THE SOFTWARE.
  */
 
-#ifndef BOARDS_H
-#define BOARDS_H
+#ifndef BOARDS_API_H
+#define BOARDS_API_H
 
-#include <stdbool.h>
-#include <stdint.h>
-#include <string.h>
 #include "boards.h"
-#include "msc_desc.h"
+#include "bootuf2_desc.h"
 
 //--------------------------------------------------------------------+
 // Features
 //--------------------------------------------------------------------+
 
-// Flash Start Address of Application
-#ifndef BOARD_FLASH_APP_START
-#    define BOARD_FLASH_APP_START 0
-#endif
-
 // Use Double Tap method to enter DFU mode
 #ifndef CHERRYUF2_DFU_DOUBLE_TAP
 #    define CHERRYUF2_DFU_DOUBLE_TAP 1
-#endif
-
-// Write protection for bootloader
-#ifndef CHERRYUF2_PROTECT_BOOTLOADER
-#    define CHERRYUF2_PROTECT_BOOTLOADER 0
-#endif
-
-#ifndef CHERRYUF2_MSC_WRITE_COMPLETE_TIMEOUT
-#    define CHERRYUF2_MSC_WRITE_COMPLETE_TIMEOUT 100
 #endif
 
 //--------------------------------------------------------------------+
@@ -74,9 +58,9 @@
 
 void board_init(void); // clk init
 
-void board_dfu_init(void); // usb and other peripherals init
+void board_dfu_init(void); // peripherals init if dfu
 
-void board_led_write(uint32_t value);
+void board_led_write(uint32_t value); 
 
 void board_timer_start(uint32_t ms);
 
@@ -90,7 +74,9 @@ void board_app_jump(void);
 
 void board_dfu_complete(void);
 
-void board_msc_init(void);
+void board_user_task_process(void);
+
+void board_uf2boot_init(void);
 
 //--------------------------------------------------------------------+
 // Flash API
@@ -98,13 +84,7 @@ void board_msc_init(void);
 
 void board_flash_init(void);
 
-uint32_t board_flash_size(void);
-
-void board_flash_read(uint32_t addr, void* buffer, uint32_t len);
-
-void board_flash_write(uint32_t addr, void const* data, uint32_t len);
-
-void board_flash_flush(void);
+int board_flash_write(uint32_t addr, void const* data, size_t len);
 
 void board_flash_erase_app(void);
 

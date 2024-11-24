@@ -50,21 +50,18 @@ GIT_SUBMODULES ?= CherryUSB
 
 # UF2 version with git tag and submodules
 GIT_VERSION := $(shell git describe --dirty="-dev" --always --tags)
-GIT_SUBMODULE_VERSIONS := $(shell git submodule status $(addprefix ../../../lib/,$(GIT_SUBMODULES)) | cut -b 43- | paste -s -d" " -)
-GIT_SUBMODULE_VERSIONS := $(subst ../../../lib/,,$(GIT_SUBMODULE_VERSIONS))
 
 CFLAGS += \
-  -DBOARD_UF2_FAMILY_ID=$(UF2_FAMILY_ID) \
-  -DUF2_VERSION_BASE='"$(GIT_VERSION)"'\
-  -DUF2_VERSION='"$(GIT_VERSION) - $(GIT_SUBMODULE_VERSIONS)"'
+  -DCONFIG_BOOTUF2_FAMILYID=$(UF2_FAMILY_ID) \
+  -DCONFIG_VERSION='"$(GIT_VERSION)"'
 
 DEPFLAGS ?=
 #-------------- Bootloader --------------
 
 SRC_C += \
-  src/ghostfat.c \
-  src/main.c \
-  src/msc_desc.c 
+  src/bootuf2_desc.c \
+  src/bootuf2.c \
+  src/main.c
 
 INC += \
   $(TOP)/src \
@@ -72,7 +69,7 @@ INC += \
   $(TOP)/$(BOARD_DIR)
 
 #-------------- CherryUSB --------------
-VALID_USB_XFER_SPEED := FS HS
+VALID_USB_XFER_SPEED := FS HS FS_HS
 USB_XFER_SPEED ?= FS
 
 CHERRYUSB_DIR = lib/CherryUSB
@@ -109,7 +106,8 @@ CFLAGS += \
   -Wsign-compare \
   -Wmissing-format-attribute \
   -Wunreachable-code \
-  -Wcast-align
+  -Wcast-align \
+  -DCONFIG_USBDEV_ADVANCE_DESC
 
 # Linker Flags
 LDFLAGS += \
@@ -127,3 +125,10 @@ LIBS += -lnosys
 # Board specific define
 # TODO should be moved to port.mk
 include $(TOP)/$(BOARD_DIR)/board.mk
+
+ifeq ($(filter $(USB_XFER_SPEED),$(VALID_USB_XFER_SPEED)),)
+  $(call Invalid USB_XFER_SPEED, USB_XFER_SPEED="$(USB_XFER_SPEED)" is not a valid value)
+else
+  CFLAGS += -DUSB_XFER_USE_$(strip $(shell echo $(USB_XFER_SPEED) | tr '[:lower:]' '[:upper:]'))
+endif
+
