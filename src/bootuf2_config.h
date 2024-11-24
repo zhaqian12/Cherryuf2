@@ -1,0 +1,75 @@
+/*
+ * Copyright (c) 2024, sakumisu
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+#ifndef BOOTUF2_CONFIG_H
+#define BOOTUF2_CONFIG_H
+
+#include "board_api.h"
+
+#ifndef CONFIG_BOOTUF2_CACHE_SIZE
+#    define CONFIG_BOOTUF2_CACHE_SIZE 4096
+#endif
+
+#ifndef CONFIG_BOOTUF2_SECTOR_SIZE
+#    define CONFIG_BOOTUF2_SECTOR_SIZE 512
+#endif
+
+#ifndef CONFIG_BOOTUF2_SECTOR_PER_CLUSTER
+#    define CONFIG_BOOTUF2_SECTOR_PER_CLUSTER 2
+#endif
+
+#ifndef CONFIG_BOOTUF2_SECTOR_RESERVED
+#    define CONFIG_BOOTUF2_SECTOR_RESERVED 1
+#endif
+
+#ifndef CONFIG_BOOTUF2_NUM_OF_FAT
+#    define CONFIG_BOOTUF2_NUM_OF_FAT 2
+#endif
+
+#ifndef CONFIG_BOOTUF2_ROOT_ENTRIES
+#    define CONFIG_BOOTUF2_ROOT_ENTRIES 64
+#endif
+
+#ifndef CONFIG_VERSION
+#    define CONFIG_VERSION "v1.0.0-alpha"
+#endif
+
+#ifndef CONFIG_PRODUCT
+#    define CONFIG_PRODUCT "CherryUF2"
+#endif
+
+#ifndef CONFIG_BOARD
+#    define CONFIG_BOARD "CherryUF2 BOARD"
+#endif
+
+#ifndef CONFIG_BOOTUF2_INDEX_URL
+#    define CONFIG_BOOTUF2_INDEX_URL "https://github.com/zhaqian12/Cherryuf2.git"
+#endif
+
+#ifndef CONFIG_BOOTUF2_VOLUME_LABEL
+#    define CONFIG_BOOTUF2_VOLUME_LABEL "CherryUF2"
+#endif
+
+#ifndef CONFIG_BOOTUF2_APP_START_ADDR
+#    define CONFIG_BOOTUF2_APP_START_ADDR 0x0
+#endif
+
+#ifndef CONFIG_BOOTUF2_APP_END_ADDR
+#    define CONFIG_BOOTUF2_APP_END_ADDR 0x0
+#endif
+
+#ifndef CONFIG_BOOTUF2_FAMILYID
+#    define CONFIG_BOOTUF2_FAMILYID 0xffffffff
+#endif
+
+#ifndef CONFIG_BOOTUF2_FLASHMAX
+#    define CONFIG_BOOTUF2_FLASHMAX (CONFIG_BOOTUF2_APP_END_ADDR - CONFIG_BOOTUF2_APP_START_ADDR)
+#endif
+
+#ifndef CONFIG_BOOTUF2_PAGE_COUNTMAX
+#    define CONFIG_BOOTUF2_PAGE_COUNTMAX 512
+#endif
+
+#endif

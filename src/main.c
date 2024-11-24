@@ -2,6 +2,7 @@
  * The MIT License (MIT)
  *
  * Copyright (c) 2019 Ha Thach (tinyusb.org)
+ *               2024 Zhaqian  
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,13 +24,9 @@
  *
  */
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <stdbool.h>
-#include <string.h>
 
-#include "board_api.h"
-#include "uf2.h"
+#include "bootuf2.h"
 #include "usbd_core.h"
 
 // timeout for double tap detection
@@ -41,11 +38,10 @@ extern uint32_t _board_dfu_dbl_tap[];
 #    define DBL_TAP_REG _board_dfu_dbl_tap[0]
 #endif
 
-volatile uint32_t _timer_count  = 0;
-volatile bool     flashing_flag = false;
+volatile uint32_t _timer_count = 0;
 
 static bool check_dfu_mode(void);
-static void msc_task_process(void);
+static void bootuf2_task_process(void);
 
 int main(void) {
     board_init();
@@ -56,14 +52,13 @@ int main(void) {
         while (1) {
         }
     }
-    
+
     board_dfu_init();
     board_flash_init();
-    uf2_init();
-    board_msc_init();
+    board_uf2boot_init();
 
     while (1) {
-        msc_task_process();
+        bootuf2_task_process();
     }
 }
 
@@ -108,13 +103,12 @@ static bool check_dfu_mode(void) {
     return false;
 }
 
-static void msc_task_process(void) {
-    if (flashing_flag) {
-        if (_timer_count > CHERRYUF2_MSC_WRITE_COMPLETE_TIMEOUT) {
-            board_timer_stop();
-            board_dfu_complete();
-        }
+static void bootuf2_task_process(void) {
+    if (bootuf2_is_write_done()) {
+        board_dfu_complete();
     }
+    board_user_task_process();
+    __NOP();
 }
 
 void board_timer_handler(void) {
