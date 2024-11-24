@@ -1,7 +1,0 @@
-CFLAGS += \
-  -DSTM32F072xB \
-  -DHSE_VALUE=8000000U \
-  -DBOARD_VECTOR_REDIRECT_BOOTLOADER
-  
-SRC_S += \
-  $(ST_CMSIS)/Source/Templates/gcc/startup_stm32f072xb.s

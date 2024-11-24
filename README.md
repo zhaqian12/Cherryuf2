@@ -18,47 +18,33 @@ It only supports DFU with MSC.
 ```
 
 # Support Devices
-| Manufacturer | MCU       | Note                                                                        |
-| :----------- | :-------- | :-------------------------------------------------------------------------- |
-| ArteryTek    | AT32F402  |                                                                             |
-| ArteryTek    | AT32F403A |                                                                             |
-| ArteryTek    | AT32F405  |                                                                             |
-| ArteryTek    | AT32F407  |                                                                             |
-| ArteryTek    | AT32F413  |                                                                             |
-| ArteryTek    | AT32F415  |                                                                             |
-| ArteryTek    | AT32F423  |                                                                             |
-| ArteryTek    | AT32F425  |                                                                             |
-| ArteryTek    | AT32F435  |                                                                             |
-| ArteryTek    | AT32F437  |                                                                             |
-| ArteryTek    | AT32WB415 |                                                                             |
-| ST           | STM32F072 | Need to redirect vectors in app or bootloader.                              |
-| ST           | STM32F103 |                                                                             |
-| ST           | STM32F401 |                                                                             |
-| ST           | STM32F407 |                                                                             |
-| ST           | STM32F411 |                                                                             |
-| ST           | STM32G431 |                                                                             |
-| ST           | STM32L433 |                                                                             |
-| WCH          | CH32V307  |                                                                             |
-| WCH          | CH582M    |                                                                             |
-| HDSC         | HC32F460  | Some problems with usb.And need to config icg if you want to use it in app. |
+| Manufacturer | MCU       | Note                                                                        | sdk |
+| :----------- | :-------- | :-------------------------------------------------------------------------- | :-------------------------------------------------------------------------- |
+| ArteryTek    | AT32F402  |                                                                             | [AT32F402_405_sdk](https://github.com/ArteryTek/AT32F402_405_Firmware_Library.git) |
+| ArteryTek    | AT32F403A |                                                                             | [AT32F403A_407_sdk](https://github.com/ArteryTek/AT32F403A_407_Firmware_Library.git)
+| ArteryTek    | AT32F405  |                                                                             | [AT32F402_405_sdk](https://github.com/ArteryTek/AT32F402_405_Firmware_Library.git)
+| ArteryTek    | AT32F407  |                                                                             | [AT32F403A_407_sdk](https://github.com/ArteryTek/AT32F403A_407_Firmware_Library.git)
+| ArteryTek    | AT32F413  |                                                                             | [AT32F413_sdk](https://github.com/ArteryTek/AT32F413_Firmware_Library.git)
+| ArteryTek    | AT32F415  |                                                                             | [AT32F415_sdk](https://github.com/ArteryTek/AT32F415_Firmware_Library.git)
+| ArteryTek    | AT32F423  |                                                                             | [AT32F423_sdk](https://github.com/ArteryTek/AT32F423_Firmware_Library.git)
+| ArteryTek    | AT32F425  |                                                                             | [AT32F425_sdk](https://github.com/ArteryTek/AT32F425_Firmware_Library.git)
+| ArteryTek    | AT32F435  |                                                                             | [AT32F435_437_sdk](https://github.com/ArteryTek/AT32F435_437_Firmware_Library.git)
+| ArteryTek    | AT32F437  |                                                                             | [AT32F435_437_sdk](https://github.com/ArteryTek/AT32F435_437_Firmware_Library.git)
+| ArteryTek    | AT32WB415 |                                                                             | [AT32WB415_sdk](https://github.com/ArteryTek/AT32WB415_Firmware_Library.git)
 
 ## Todo List
-- [ ] AT32F435/7(Multiport)
-- [ ] HPM5300
-- [ ] CH32V307 -> CH32V20X_30X
-- [ ] BL618
-- [ ] CH32F20X
-- [ ] CH32V20X
-- [ ] AG32VF103
-- [ ] STM32H7
-- [ ] MM32F327X
-- [ ] ...
+- [ ] Arterytek
+- [ ] HPM
+- [ ] WCH
+- [ ] ST
 
 # How to build
-```
-$ cd ports/ArteryTek/at32f413
-$ make BOARD=at32f413cbt7 all
-```
+- Download the sdk of mcu.
+- 
+    ```
+    $ cd ports/ArteryTek/at32f413
+    $ make BOARD=at32f413cbt7 all
+    ```
 
 # How to clean
 ```

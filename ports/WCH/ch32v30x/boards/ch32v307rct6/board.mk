@@ -1,9 +1,0 @@
-CFLAGS += \
-  -DCH32V30x_D8C \
-  -DHSE_VALUE=8000000U \
-  -DCONFIG_USB_HS
-
-SRC_S += \
-  $(WCH_CMSIS)/Startup/startup_ch32v30x_D8C.S
-
-USB_XFER_SPEED = HS
