@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2023 Zhaqian
+ * Copyright (c) 2024 Zhaqian
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -62,10 +62,10 @@ __attribute__((weak)) void board_dfu_complete(void) {
 }
 
 __attribute__((weak)) bool board_app_valid(void) {
-    volatile uint32_t const *app_vector = (volatile uint32_t const *)BOARD_FLASH_APP_START;
+    volatile uint32_t const *app_vector = (volatile uint32_t const *)CONFIG_BOOTUF2_APP_START_ADDR;
 
     // 2nd word is App entry point (reset)
-    if (app_vector[1] < BOARD_FLASH_APP_START || app_vector[1] > BOARD_FLASH_APP_START + BOARD_FLASH_SIZE) {
+    if (app_vector[1] < CONFIG_BOOTUF2_APP_START_ADDR || app_vector[1] > CONFIG_BOOTUF2_APP_END_ADDR) {
         return false;
     }
 
@@ -85,14 +85,17 @@ __attribute__((weak)) void board_app_jump(void) {
         NVIC->ICPR[i] = 0xFFFFFFFF;
     }
 
-    volatile uint32_t const *app_vector = (volatile uint32_t const *)BOARD_FLASH_APP_START;
+    volatile uint32_t const *app_vector = (volatile uint32_t const *)CONFIG_BOOTUF2_APP_START_ADDR;
 
     /* switch exception handlers to the application */
-    SCB->VTOR = (uint32_t)BOARD_FLASH_APP_START;
+    SCB->VTOR = (uint32_t)CONFIG_BOOTUF2_APP_START_ADDR;
 
     __set_CONTROL(0);
     __set_MSP(app_vector[0]);
     asm("bx %0" ::"r"(app_vector[1]));
+}
+
+__attribute__((weak)) void board_user_task_process(void) {
 }
 
 //--------------------------------------------------------------------+

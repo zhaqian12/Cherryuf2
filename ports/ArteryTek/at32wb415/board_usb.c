@@ -27,18 +27,16 @@
 //--------------------------------------------------------------------+
 // CherryUSB LLD
 //--------------------------------------------------------------------+
-extern const uint8_t msc_descriptor[];
-
 static struct usbd_interface intf0;
 
-void board_msc_init(void) {
-    usbd_desc_register(0, msc_descriptor);
-    usbd_add_interface(0, usbd_msc_init_intf(0, &intf0, MSC_OUT_EP, MSC_IN_EP));
-
-    usbd_initialize(0, OTGFS1_BASE, usbd_event_handler);
+__attribute__((weak)) void board_uf2boot_init(void) {
+    usbd_desc_register(BOOTUF2_BUS_ID_FS, &bootuf2_descriptor);
+    usbd_add_interface(BOOTUF2_BUS_ID_FS, usbd_msc_init_intf(BOOTUF2_BUS_ID_FS, &intf0, BOOTUF2_OUT_EP, BOOTUF2_IN_EP));
+    usbd_initialize(BOOTUF2_BUS_ID_FS, USB_DEVICE_SPEED_FS, OTGFS1_BASE, usbd_event_handler);
 }
 
-__attribute__((weak)) void usb_dc_low_level_init(void) {
+__attribute__((weak)) void usb_dc_low_level_init(uint8_t busid) {
+    (void)busid;
     gpio_init_type gpio_init_struct;
 
     gpio_default_para_init(&gpio_init_struct);
@@ -60,5 +58,28 @@ __attribute__((weak)) void usb_dc_low_level_init(void) {
 //--------------------------------------------------------------------+
 void OTGFS1_IRQHandler(void) {
     extern void USBD_IRQHandler(uint8_t busid);
-    USBD_IRQHandler(0);
+    USBD_IRQHandler(BOOTUF2_BUS_ID_FS);
+}
+
+//--------------------------------------------------------------------+
+// dwc2 fifo configuration
+//--------------------------------------------------------------------+
+static const uint16_t usbd_dwc2_rxfifo_size[1] = {
+    128, // OTGFS1
+};
+
+static const uint16_t usbd_dwc2_txfifo_size[1][4] = {
+    {24, 20, 20, 20}, // OTGFS1
+};
+
+uint16_t usbd_get_dwc2_rxfifo_conf(uint8_t busid) {
+    return usbd_dwc2_rxfifo_size[0];
+}
+
+uint16_t usbd_get_dwc2_txfifo_conf(uint8_t busid, uint8_t fifoid) {
+    if (fifoid > 3) {
+        return 0;
+    }
+
+    return usbd_dwc2_txfifo_size[0][fifoid];
 }

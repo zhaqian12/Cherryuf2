@@ -53,6 +53,10 @@
 #    define BOOTUF2_BUS_ID_HS 0x01
 #endif
 
+#ifndef BOOTUF2_BUS_ID_FS2
+#    define BOOTUF2_BUS_ID_FS2 0x01
+#endif
+
 extern const struct usb_descriptor bootuf2_descriptor;
 
 void usbd_event_handler(uint8_t busid, uint8_t event);

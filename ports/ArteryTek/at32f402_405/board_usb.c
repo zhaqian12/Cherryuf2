@@ -84,15 +84,21 @@ static const uint16_t usbd_dwc2_txfifo_size[2][8] = {
 };
 
 uint16_t usbd_get_dwc2_rxfifo_conf(uint8_t busid) {
-    if (busid == BOOTUF2_BUS_ID_FS)
+    if (busid == BOOTUF2_BUS_ID_FS) {
         return usbd_dwc2_rxfifo_size[0];
-    else
+    } else {
         return usbd_dwc2_rxfifo_size[1];
+    }
 }
 
 uint16_t usbd_get_dwc2_txfifo_conf(uint8_t busid, uint8_t fifoid) {
-    if (busid == BOOTUF2_BUS_ID_FS)
+    if (fifoid > 7) {
+        return 0;
+    }
+
+    if (busid == BOOTUF2_BUS_ID_FS) {
         return usbd_dwc2_txfifo_size[0][fifoid];
-    else
+    } else {
         return usbd_dwc2_txfifo_size[1][fifoid];
+    }
 }

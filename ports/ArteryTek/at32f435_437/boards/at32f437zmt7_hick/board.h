@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2023 Zhaqian
+ * Copyright (c) 2024 Zhaqian
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,29 +31,27 @@
 //--------------------------------------------------------------------+
 // LED
 //--------------------------------------------------------------------+
-#define LED_PORT              GPIOA
-#define LED_PIN               GPIO_PINS_8
-#define LED_STATE_ON          0
+#define LED_PORT                    GPIOA
+#define LED_PIN                     GPIO_PINS_8
+#define LED_STATE_ON                0
 
 //--------------------------------------------------------------------+
 // FLASH 
 //--------------------------------------------------------------------+
-#define BOARD_SECTOR_SIZE     4096U
-#define BOARD_SECTOR_COUNT    1008
-#define BOARD_FLASH_SIZE      (BOARD_SECTOR_SIZE * BOARD_SECTOR_COUNT)
+#define BOARD_SECTOR_SIZE           4096U
+#define BOARD_SECTOR_COUNT          1008
+#define BOARD_FLASH_SIZE            (BOARD_SECTOR_SIZE * BOARD_SECTOR_COUNT)
 
 //--------------------------------------------------------------------+
 // USB UF2 
 //--------------------------------------------------------------------+
-#define USBD_VID              0x00AA
-#define USBD_PID              0xAAFF
-#define USB_MANUFACTURER      "ArteryTek"
-#define USB_PRODUCT           "AT32F437"
+#define USBD_VID                    0x00AA
+#define USBD_PID                    0xAAFF
 
-#define UF2_PRODUCT_NAME      USB_MANUFACTURER " " USB_PRODUCT
-#define UF2_BOARD_ID          "AT32F437xM"
-#define UF2_VOLUME_LABEL      "CherryUF2"
-#define UF2_INDEX_URL         "https://www.arterytek.com/cn/product/AT32F437.jsp"
+#define CONFIG_PRODUCT              "ArteryTek AT32F437"
+#define CONFIG_BOARD                "AT32F437xM 2OTG"
+#define CONFIG_BOOTUF2_INDEX_URL    "https://www.arterytek.com/cn/product/AT32F437.jsp"
+#define CONFIG_BOOTUF2_VOLUME_LABEL "CherryUF2"
 
 // clang-format on
 //--------------------------------------------------------------------+

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2023 Zhaqian
+ * Copyright (c) 2024 Zhaqian
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +29,7 @@
 //--------------------------------------------------------------------+
 #define FLASH_BASE_ADDR 0x08000000UL
 
-#define SECTOR_SIZE BOARD_SECTOR_SIZE
-#define SECTOR_COUNT BOARD_SECTOR_COUNT
-
-static uint8_t erased_sectors[SECTOR_COUNT] = {0};
+static uint8_t erased_sectors[BOARD_SECTOR_COUNT] = {0};
 
 static bool is_blank(uint32_t addr, uint32_t size) {
     for (uint32_t i = 0; i < size; i += sizeof(uint32_t)) {
@@ -51,12 +48,12 @@ static bool flash_erase(uint32_t addr) {
     uint32_t sector = 0;
     uint32_t size   = 0;
     (void)sector;
-    for (uint32_t i = 0; i < SECTOR_COUNT; i++) {
-        size = SECTOR_SIZE;
+    for (uint32_t i = 0; i < BOARD_SECTOR_COUNT; i++) {
+        size = BOARD_SECTOR_SIZE;
         if (sector_addr + size > addr) {
             sector            = i;
             erased            = erased_sectors[i];
-            erased_sectors[i] = 1; 
+            erased_sectors[i] = 1;
             break;
         }
         sector_addr += size;
@@ -87,20 +84,14 @@ static void flash_write(uint32_t dst, const uint8_t *src, int len) {
 //--------------------------------------------------------------------+
 __attribute__((weak)) void board_flash_init(void) {}
 
-__attribute__((weak)) uint32_t board_flash_size(void) {
-    return BOARD_FLASH_SIZE;
-}
-
-__attribute__((weak)) void board_flash_read(uint32_t addr, void *buffer, uint32_t len) {
-    memcpy(buffer, (void *)addr, len);
-}
-
-__attribute__((weak)) void board_flash_flush(void) {}
-
-__attribute__((weak)) void board_flash_write(uint32_t addr, void const *data, uint32_t len) {
+__attribute__((weak)) int board_flash_write(uint32_t addr, void const *data, size_t len) {
+    if (addr < CONFIG_BOOTUF2_APP_START_ADDR && addr > CONFIG_BOOTUF2_APP_END_ADDR) {
+        return -1;
+    }
     flash_unlock();
     flash_write(addr, data, len);
     flash_lock();
+    return 0;
 }
 
 __attribute__((weak)) void board_flash_erase_app(void) {}

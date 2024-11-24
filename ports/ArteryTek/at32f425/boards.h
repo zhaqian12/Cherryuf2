@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2023 Zhaqian
+ * Copyright (c) 2024 Zhaqian
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,8 +34,16 @@ extern "C" {
 #include "board.h"
 
 // Flash Start Address of Application
-#ifndef BOARD_FLASH_APP_START
-#    define BOARD_FLASH_APP_START 0x08003000
+#ifndef CONFIG_BOOTUF2_APP_START_ADDR
+#    define CONFIG_BOOTUF2_APP_START_ADDR 0x08003000
+#endif
+
+#ifndef CONFIG_BOOTUF2_APP_END_ADDR
+#    define CONFIG_BOOTUF2_APP_END_ADDR (0x08000000 + BOARD_FLASH_SIZE)
+#endif
+
+#ifndef CONFIG_BOOTUF2_PAGE_COUNTMAX
+#    define CONFIG_BOOTUF2_PAGE_COUNTMAX BOARD_SECTOR_COUNT
 #endif
 
 // Double Reset tap to enter DFU
