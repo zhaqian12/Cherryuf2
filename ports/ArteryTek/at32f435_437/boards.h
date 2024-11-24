@@ -46,6 +46,10 @@ extern "C" {
 #    define CONFIG_BOOTUF2_PAGE_COUNTMAX BOARD_SECTOR_COUNT
 #endif
 
+#ifndef CONFIG_BOOTUF2_CACHE_SIZE
+#    define CONFIG_BOOTUF2_CACHE_SIZE BOARD_SECTOR_SIZE
+#endif
+
 // Double Reset tap to enter DFU
 #define CHERRYUF2_DFU_DOUBLE_TAP 1
         
