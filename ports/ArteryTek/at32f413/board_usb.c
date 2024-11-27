@@ -48,8 +48,3 @@ void USBFS_L_CAN1_RX0_IRQHandler(void) {
     extern void USBD_IRQHandler(uint8_t busid);
     USBD_IRQHandler(BOOTUF2_BUS_ID_FS);
 }
-
-
-
-
-

@@ -36,14 +36,14 @@
 #define LED_STATE_ON                0
 
 //--------------------------------------------------------------------+
-// FLASH 
+// FLASH
 //--------------------------------------------------------------------+
 #define BOARD_SECTOR_SIZE           1024U
 #define BOARD_SECTOR_COUNT          128
 #define BOARD_FLASH_SIZE            (BOARD_SECTOR_SIZE * BOARD_SECTOR_COUNT)
 
 //--------------------------------------------------------------------+
-// USB UF2 
+// USB UF2
 //--------------------------------------------------------------------+
 #define USBD_VID                    0x00AA
 #define USBD_PID                    0xAAFF
