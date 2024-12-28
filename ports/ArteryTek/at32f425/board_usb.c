@@ -77,7 +77,7 @@ static const uint16_t usbd_dwc2_rxfifo_size[1] = {
 };
 
 static const uint16_t usbd_dwc2_txfifo_size[1][8] = {
-    {24, 20, 20, 20,  20, 20, 20, 20}, // OTGFS1
+    {24, 20, 20, 20, 20, 20, 20, 20}, // OTGFS1
 };
 
 uint16_t usbd_get_dwc2_rxfifo_conf(uint8_t busid) {

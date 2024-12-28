@@ -48,7 +48,6 @@
 #define USBD_VID                    0x00AA
 #define USBD_PID                    0xAAFF
 
-
 #define CONFIG_PRODUCT              "ArteryTek AT32F425"
 #define CONFIG_BOARD                "AT32F425x8"
 #define CONFIG_BOOTUF2_INDEX_URL    "https://www.arterytek.com/cn/product/AT32F425.jsp"

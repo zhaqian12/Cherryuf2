@@ -1,7 +1,6 @@
 CFLAGS += \
   -DAT32F405CCU7 \
   -DHEXT_VALUE=12000000U \
-  -DSystemCoreClock=system_core_clock \
   -DCONFIG_USBDEV_MAX_BUS=1 \
   -DBOOTUF2_BUS_ID_HS=0x00
 

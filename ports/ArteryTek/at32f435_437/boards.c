@@ -114,7 +114,7 @@ void board_led_write(uint32_t state) {
 // Timer
 //--------------------------------------------------------------------+
 void board_timer_start(uint32_t ms) {
-    SysTick_Config((SystemCoreClock / 1000) * ms);
+    SysTick_Config((system_core_clock / 1000) * ms);
 }
 
 void board_timer_stop(void) {
